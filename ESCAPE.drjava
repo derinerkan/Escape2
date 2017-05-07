@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20160913-225446">
+  <project autorefresh="false" build="classes/" root="" work="images/">
+    <createjar file=""/>
+    <source>
+      <file active="true" name="src/Visuals.java" package="" timestamp="07-May-2017 19:30:02">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/Main.java" package="" timestamp="07-May-2017 17:33:24">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/HowToPlayPanel.java" package="" timestamp="07-May-2017 16:34:55">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/LeaderboardPanel.java" package="" timestamp="07-May-2017 16:34:55">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/StorePanel.java" package="" timestamp="07-May-2017 16:56:11">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/MainMenuPanel.java" package="" timestamp="07-May-2017 17:24:14">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/SettingsPanel.java" package="" timestamp="07-May-2017 17:26:21">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/Laser.java" package="" timestamp="07-May-2017 17:30:24">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/Ball.java" package="" timestamp="07-May-2017 17:32:40">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/Point.java" package="" timestamp="07-May-2017 17:33:37">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+      <file name="src/GamePanel.java" package="" timestamp="07-May-2017 19:32:00">
+        <select from="1880" to="1880"/>
+        <scroll column="336" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath/>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+    <preferences/>
+  </project>
+</drjava>
