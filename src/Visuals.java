@@ -22,9 +22,9 @@ public class Visuals
     {
         try
         {
-            ballImage = ImageIO.read( new File( "ballImage.png" ) );
+            ballImage = ImageIO.read( new File( "images/ballImage.png" ) );
         }
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
     
     /**
@@ -50,7 +50,7 @@ public class Visuals
     {
         Graphics2D g2 = ( Graphics2D ) g;
         g2.setStroke( new BasicStroke( 4 ) );
-        g.setColor( Color.BLUE );
+        g.setColor( toDraw.laserColor() );
         g.drawLine( ( int ) toDraw.getP1().getX(), ( int ) toDraw.getP1().getY(), ( int ) toDraw.getP2().getX(),
                    ( int ) toDraw.getP2().getY() );
     }

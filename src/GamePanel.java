@@ -61,9 +61,9 @@ public class GamePanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "gameBackground.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
-            pauseIcon = ImageIO.read( new File( "pauseIcon.png" ) );
+            background = ImageIO.read( new File( "images/gameBackground.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
+            pauseIcon = ImageIO.read( new File( "images/pauseIcon.png" ) );
         }
         
         catch( IOException exception ){}
@@ -215,7 +215,7 @@ public class GamePanel extends JPanel
             }
             for ( int i = 0; i < lasers.size(); i++ )
             {
-                lasers.get( i ).incrementTimeAlive( 1 );
+                //lasers.get( i ).incrementTimeAlive( 1 );
                 if ( !lasers.get( i ).isAlive() )
                 {
                     lasers.remove( i );

@@ -39,7 +39,7 @@ public class Ball
     
     /**
      * The copy constructor of the Ball, it takes the Ball to be copied as a parameter.
-     * @param toCopy is the Ball to be copied.
+     * @param other is the Ball to be copied.
      */
     public Ball( Ball other )
     {
