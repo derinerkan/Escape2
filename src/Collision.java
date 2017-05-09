@@ -14,6 +14,6 @@ public class Collision
     public static boolean isTouching(Laser laser, Ball ball)
     {
         boolean touch = false;
-        
+        return touch;
     }
 }

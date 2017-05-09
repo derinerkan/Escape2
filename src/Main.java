@@ -7,7 +7,9 @@ public class Main
     {
         Main game = new Main();
     }
-    
+
+    public static SaveGame saveGame;
+
     //Constants
     private static JFrame mainFrame;
     private static JPanel currentPanel;
@@ -17,6 +19,7 @@ public class Main
     
     public Main()
     {
+        saveGame = new SaveGame();
         currentPanel = new MainMenuPanel();
         mainFrame = new JFrame( TITLE );
         mainFrame.add( currentPanel );

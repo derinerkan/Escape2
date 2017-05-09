@@ -1,14 +1,11 @@
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class LeaderboardPanel extends JPanel 
 {
@@ -29,15 +26,16 @@ public class LeaderboardPanel extends JPanel
         addImages();
         
         addButtons();
+        drawText();
     }
     
     public void addImages()
     {
         try
         {
-            background = ImageIO.read( new File( "leaderboardBackground.jpg" ) );
-            leaderboardLabel = ImageIO.read( new File( "leaderboardLabel.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+            background = ImageIO.read( new File( "images/leaderboardBackground.jpg" ) );
+            leaderboardLabel = ImageIO.read( new File( "images/leaderboardLabel.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
         
         catch( IOException exception ){}
@@ -62,6 +60,21 @@ public class LeaderboardPanel extends JPanel
         
         g.drawImage( background, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, null );
         g.drawImage( leaderboardLabel, 160, 25, 600, 100, null );
+
+        /*g.setColor(Color.WHITE.darker());
+        g.drawString("Yarrak", 100, 100);/**/
+    }
+
+    public void drawText()
+    {
+        JTextArea list = new JTextArea(Main.saveGame.leaderboard.toString());
+        //list.setText("TEST YARAK");
+        list.setBackground(Color.WHITE);
+        list.setBounds(150,150,600,400);
+        list.setEditable(false);
+        list.setVisible(true);
+        add(list);
+        Main.saveGame.saveGame();
     }
     
     private class BackButtonListener implements ActionListener

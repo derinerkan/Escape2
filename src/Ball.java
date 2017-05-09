@@ -1,10 +1,12 @@
+import java.io.Serializable;
+
 /**
  * This class represents the Ball, which the user controls in the game. It involves methods to move the Ball and access
  * relevant information.
  * @author BROJECT
  * @version 1.0
  */
-public class Ball
+public class Ball implements Serializable
 {
     //Constants
     private final int PRICE;
