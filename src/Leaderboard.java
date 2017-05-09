@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Leaderboard implements Serializable
 {
     ArrayList<Player> list;
+    final int SIZE = 10;
 
     public Leaderboard()
     {
@@ -20,29 +21,21 @@ public class Leaderboard implements Serializable
      */
     public void addPlayer(Player toAdd)
     {
-        for( int i = 0; i < list.size(); i++)
+        System.err.println("Entered add player subroutine");
+        System.err.println(canAdd(toAdd));
+
+        if(list.isEmpty()) list.add(toAdd);
+        System.err.println(this.toString());
+
+        if(canAdd(toAdd)) //check if there is room for this player to enter the leaderboards
         {
-            //Checking whether it's bigger or not.
-            if(toAdd.getScore() > list.get(i).getScore())
+            for (Player p : list)
             {
-                list.remove(list.size()-1);
-                list.add(i,toAdd);
-                return;
-            }
-            // Checking the alphabetical order if both players get the same score.
-            if( toAdd.getScore() == list.get(i).getScore() )
-            {
-                if( (toAdd.getName().compareTo( list.get(i).getName() ) ) < 0)
+                if (toAdd.getHighScore() >= p.getHighScore())
                 {
-                    list.add(i,toAdd);
-                    list.remove(list.size()-1);
+                    list.add(list.indexOf(p), toAdd);
+                    if(list.size() > SIZE) list.remove(SIZE);
                     return;
-                }
-                else
-                {
-                    list.add(i+1,toAdd);
-                    list.remove( list.size()-1 );
-                    return ;
                 }
             }
         }
@@ -55,6 +48,7 @@ public class Leaderboard implements Serializable
      */
     public boolean canAdd(Player toAdd)
     {
+        if(list.isEmpty() || list.size() < SIZE) return true;
         return toAdd.getScore() > list.get(list.size() - 1).getScore();
     }
 
@@ -78,10 +72,10 @@ public class Leaderboard implements Serializable
      */
     public String toString()
     {
-        String output = "";
-        for(String str : printMethod()) output += str + "\n";
-        //return output;
-        return "TEST YARRAK";
+        StringBuffer output = new StringBuffer("");
+        for(String str : printMethod()) output.append(str).append("\n");
+        return output.toString();
+        //return "TEST YARRAK";
     }
 
 }

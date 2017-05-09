@@ -35,9 +35,9 @@ public class SettingsPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "settingsBackground.jpg" ) );
-            settingsLabel = ImageIO.read( new File( "settingsLabel.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+            background = ImageIO.read( new File( "images/settingsBackground.jpg" ) );
+            settingsLabel = ImageIO.read( new File( "images/settingsLabel.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
         
         catch( IOException exception ){}
