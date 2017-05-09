@@ -65,6 +65,7 @@ public class LeaderboardPanel extends JPanel
         g.drawImage( leaderboardLabel, 160, 25, 600, 100, null );
 
         list.setText(Main.saveGame.leaderboard.toString());
+
         /*g.setColor(Color.WHITE.darker());
         g.drawString("Yarrak", 100, 100);/**/
     }
@@ -79,6 +80,7 @@ public class LeaderboardPanel extends JPanel
         list.setBackground(new Color(0x00ff00ff,true));
         list.setBounds(150,150,600,400);
         list.setEditable(false);
+        list.setOpaque(false);
         list.setVisible(true);
         add(list);
         Main.saveGame.saveGame();

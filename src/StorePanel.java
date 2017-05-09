@@ -39,11 +39,11 @@ public class StorePanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "storeBackground.jpg" ) );
-            storeLabel = ImageIO.read( new File( "storeLabel.png" ) );
-            rightArrow = ImageIO.read( new File( "rightArrow.png" ) );
-            leftArrow = ImageIO.read( new File( "leftArrow.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+            background = ImageIO.read( new File( "images/storeBackground.jpg" ) );
+            storeLabel = ImageIO.read( new File( "images/storeLabel.png" ) );
+            rightArrow = ImageIO.read( new File( "images/rightArrow.png" ) );
+            leftArrow = ImageIO.read( new File( "images/leftArrow.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
         
         catch( IOException exception ){}

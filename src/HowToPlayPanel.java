@@ -36,12 +36,12 @@ public class HowToPlayPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "howToPlayBackground.jpg" ) );
-            howToPlayLabel = ImageIO.read( new File( "howToPlayLabel.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+            background = ImageIO.read( new File( "images/howToPlayBackground.jpg" ) );
+            howToPlayLabel = ImageIO.read( new File( "images/howToPlayLabel.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
         
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
     
     public void addButtons()
