@@ -105,7 +105,7 @@ public class LeaderboardPanel extends JPanel
         scores.setFont(new Font("Dialog", Font.ITALIC + Font.BOLD, 25));
         scores.setForeground(Color.WHITE.darker());
         scores.setBackground(new Color(0x00ff00ff, true));
-        scores.setBounds(550, 150, 300, 400);
+        scores.setBounds(650, 150, 300, 400);
         scores.setEditable(false);
         scores.setOpaque(false);
 
