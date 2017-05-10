@@ -77,9 +77,13 @@ public class GamePanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "gameBackground.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
-            pauseIcon = ImageIO.read( new File( "pauseIcon.png" ) );
+            background = ImageIO.read( new File( "images/gameBackground.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
+            pauseIcon = ImageIO.read( new File( "images/pauseIcon.png" ) );
+
+//            background = ImageIO.read( new File( "gameBackground.png" ) );
+//            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+//            pauseIcon = ImageIO.read( new File( "pauseIcon.png" ) );
         }
         
         catch( IOException exception ){}

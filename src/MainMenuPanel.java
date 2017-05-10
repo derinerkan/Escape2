@@ -43,13 +43,21 @@ public class MainMenuPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "menuBackground.jpg") );
-            logo = ImageIO.read( new File( "logo.png" ) );
-            playImage = ImageIO.read( new File( "play.png" ) );
-            storeImage = ImageIO.read( new File( "store.png" ) );
-            leaderboardImage = ImageIO.read( new File( "leaderboard.png" ) );
-            howToPlayImage = ImageIO.read( new File( "howToPlay.png" ) );
-            settingsImage = ImageIO.read( new File( "settingsButton.png" ) );
+            background = ImageIO.read( new File( "images/menuBackground.jpg") );
+            logo = ImageIO.read( new File( "images/logo.png" ) );
+            playImage = ImageIO.read( new File( "images/play.png" ) );
+            storeImage = ImageIO.read( new File( "images/store.png" ) );
+            leaderboardImage = ImageIO.read( new File( "images/leaderboard.png" ) );
+            howToPlayImage = ImageIO.read( new File( "images/howToPlay.png" ) );
+            settingsImage = ImageIO.read( new File( "images/settingsButton.png" ) );
+
+//            background = ImageIO.read( new File( "menuBackground.jpg") );
+//            logo = ImageIO.read( new File( "logo.png" ) );
+//            playImage = ImageIO.read( new File( "play.png" ) );
+//            storeImage = ImageIO.read( new File( "store.png" ) );
+//            leaderboardImage = ImageIO.read( new File( "leaderboard.png" ) );
+//            howToPlayImage = ImageIO.read( new File( "howToPlay.png" ) );
+//            settingsImage = ImageIO.read( new File( "settingsButton.png" ) );
         }
         
         catch( IOException exception ){}

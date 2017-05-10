@@ -51,15 +51,25 @@ public class StorePanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "storeBackground.jpg" ) );
-            storeLabel = ImageIO.read( new File( "storeLabel.png" ) );
-            rightArrow = ImageIO.read( new File( "rightArrow.png" ) );
-            leftArrow = ImageIO.read( new File( "leftArrow.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
-            sunBall = ImageIO.read( new File( "sunImage.png" ) );
-            moonBall = ImageIO.read( new File( "moonImage.png" ) );
-            earthBall = ImageIO.read( new File( "earthImage.png" ) );
-            equipImage = ImageIO.read( new File( "equipButton.png" ) );
+            background = ImageIO.read( new File( "images/storeBackground.jpg" ) );
+            storeLabel = ImageIO.read( new File( "images/storeLabel.png" ) );
+            rightArrow = ImageIO.read( new File( "images/rightArrow.png" ) );
+            leftArrow = ImageIO.read( new File( "images/leftArrow.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
+            sunBall = ImageIO.read( new File( "images/sunImage.png" ) );
+            moonBall = ImageIO.read( new File( "images/moonImage.png" ) );
+            earthBall = ImageIO.read( new File( "images/earthImage.png" ) );
+            equipImage = ImageIO.read( new File( "images/equipButton.png" ) );
+
+//            background = ImageIO.read( new File( "storeBackground.jpg" ) );
+//            storeLabel = ImageIO.read( new File( "storeLabel.png" ) );
+//            rightArrow = ImageIO.read( new File( "rightArrow.png" ) );
+//            leftArrow = ImageIO.read( new File( "leftArrow.png" ) );
+//            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+//            sunBall = ImageIO.read( new File( "sunImage.png" ) );
+//            moonBall = ImageIO.read( new File( "moonImage.png" ) );
+//            earthBall = ImageIO.read( new File( "earthImage.png" ) );
+//            equipImage = ImageIO.read( new File( "equipButton.png" ) );
         }
         
         catch( IOException exception ){}
@@ -158,6 +168,12 @@ public class StorePanel extends JPanel
                     index = index - 1;
                 }
                 repaint();
+            }
+            else if(event.getSource() == equipButton)
+            {
+                Ball toSet = store.getBalls().get(index);
+                toSet.setOwned(true);
+                Main.saveGame.getPlayer().setBall(toSet);
             }
         }
     }

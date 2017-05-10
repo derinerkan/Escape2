@@ -1,10 +1,12 @@
+import java.io.Serializable;
+
 /**
  * This class represents a Point on the cartesian plane. It involves methods to control the Point and access relevant
  * information.
  * @author BROJECT
  * @version 1.0
  */
-public class Point 
+public class Point implements Serializable
 {
     //Properties
     private double x;

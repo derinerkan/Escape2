@@ -24,11 +24,15 @@ public class Visuals
     {
         try
         {
-            sunImage = ImageIO.read( new File( "sunImage.png" ) );
-            moonImage = ImageIO.read( new File( "moonImage.png" ) );
-            earthImage = ImageIO.read( new File( "earthImage.png" ) );
+            sunImage = ImageIO.read( new File( "images/sunImage.png" ) );
+            moonImage = ImageIO.read( new File( "images/moonImage.png" ) );
+            earthImage = ImageIO.read( new File( "images/earthImage.png" ) );
+
+//            sunImage = ImageIO.read( new File( "sunImage.png" ) );
+//            moonImage = ImageIO.read( new File( "moonImage.png" ) );
+//            earthImage = ImageIO.read( new File( "earthImage.png" ) );
         }
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
     
     /**
