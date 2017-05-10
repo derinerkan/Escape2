@@ -21,10 +21,15 @@ public class Leaderboard implements Serializable
      */
     public void addPlayer(Player toAdd)
     {
+        Player toAddCopy = new Player(toAdd);
         System.err.println("Entered add player subroutine");
-        System.err.println(canAdd(toAdd));
+        System.err.println(canAdd(toAddCopy));
 
-        if(list.isEmpty()) list.add(toAdd);
+        if(list.isEmpty())
+        {
+            list.add(toAddCopy);
+            return;
+        }
         System.err.println(this.toString());
 
         if(canAdd(toAdd)) //check if there is room for this player to enter the leaderboards
@@ -33,7 +38,7 @@ public class Leaderboard implements Serializable
             {
                 if (toAdd.getHighScore() >= p.getHighScore())
                 {
-                    list.add(list.indexOf(p), toAdd);
+                    list.add(list.indexOf(p), toAddCopy);
                     if(list.size() > SIZE) list.remove(SIZE);
                     return;
                 }
@@ -78,4 +83,25 @@ public class Leaderboard implements Serializable
         //return "TEST YARRAK";
     }
 
+    /**
+     * Returns a string representation of just the names
+     * @return the names with proper LF
+     */
+    public String namesToString()
+    {
+        StringBuffer output = new StringBuffer("");
+        for(Player p : list) output.append(p.getName()).append("\n");
+        return output.toString();
+    }
+
+    /**
+     * Returns a string representation of just the scores, with rounding
+     * @return the scores with proper LF, corresponding to the players
+     */
+    public String scoresToString()
+    {
+        StringBuffer output = new StringBuffer("");
+        for(Player p : list) output.append(Math.round(p.getHighScore())).append("\n");
+        return output.toString();
+    }
 }

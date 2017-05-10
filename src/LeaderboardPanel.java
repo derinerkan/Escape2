@@ -19,7 +19,9 @@ public class LeaderboardPanel extends JPanel
     private Image leaderboardLabel;
     private BufferedImage backArrow;
     private JButton backButton;
-    private JTextArea list;
+    //private JTextArea list;
+    private JTextArea names;
+    private JTextArea scores;
     
     public LeaderboardPanel()
     {
@@ -64,14 +66,20 @@ public class LeaderboardPanel extends JPanel
         g.drawImage( background, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, null );
         g.drawImage( leaderboardLabel, 160, 25, 600, 100, null );
 
-        list.setText(Main.saveGame.leaderboard.toString());
+        //list.setText(Main.saveGame.leaderboard.toString());
+        names.setText(Main.saveGame.leaderboard.namesToString());
+        scores.setText(Main.saveGame.leaderboard.scoresToString());
 
+        g.setColor(Color.WHITE);
+
+        //g.drawLine(500,150,500,550);
         /*g.setColor(Color.WHITE.darker());*/
 
     }
 
     public void drawText()
     {
+        /*
         list = new JTextArea(Main.saveGame.leaderboard.toString());
         Font font = list.getFont();
         font = new Font(font.getName(),Font.ITALIC + Font.BOLD, 25);
@@ -83,9 +91,29 @@ public class LeaderboardPanel extends JPanel
         list.setOpaque(false);
         list.setVisible(true);
         add(list);
-        Main.saveGame.saveGame();
+        Main.saveGame.saveGame();/**/
+
+        names = new JTextArea(Main.saveGame.leaderboard.namesToString());
+        names.setFont(new Font("Dialog", Font.ITALIC + Font.BOLD, 25));
+        names.setForeground(Color.WHITE.darker());
+        names.setBackground(new Color(0x00ff00ff, true));
+        names.setBounds(150, 150, 300, 400);
+        names.setEditable(false);
+        names.setOpaque(false);
+
+        scores = new JTextArea(Main.saveGame.leaderboard.scoresToString());
+        scores.setFont(new Font("Dialog", Font.ITALIC + Font.BOLD, 25));
+        scores.setForeground(Color.WHITE.darker());
+        scores.setBackground(new Color(0x00ff00ff, true));
+        scores.setBounds(550, 150, 300, 400);
+        scores.setEditable(false);
+        scores.setOpaque(false);
+
+        add(names);
+        add(scores);
     }
 
+    @Deprecated
     public void drawDebugBox()
     {
         final JTextField field = new JTextField("Test");
