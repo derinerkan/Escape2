@@ -29,7 +29,7 @@ public class LeaderboardPanel extends JPanel
         
         addButtons();
         drawText();
-        drawDebugBox();
+        //drawDebugBox();
     }
     
     public void addImages()
@@ -66,8 +66,8 @@ public class LeaderboardPanel extends JPanel
 
         list.setText(Main.saveGame.leaderboard.toString());
 
-        /*g.setColor(Color.WHITE.darker());
-        g.drawString("Yarrak", 100, 100);/**/
+        /*g.setColor(Color.WHITE.darker());*/
+
     }
 
     public void drawText()

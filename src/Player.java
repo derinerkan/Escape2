@@ -145,4 +145,12 @@ public class Player implements Serializable
         return name;
     }
 
+    /**
+     * Resets the score of this player to zero, leaving their high score intact.
+     */
+    public void resetScore()
+    {
+        score = 0;
+    }
+
 }
