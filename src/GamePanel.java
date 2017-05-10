@@ -14,12 +14,17 @@ import java.awt.event.KeyEvent;
 import javax.swing.Timer;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.util.Arrays;
+import java.awt.Color;
+import java.awt.Font;
 
-public class GamePanel extends JPanel 
+public class GamePanel extends JPanel
 {
     //Constants
-    private static final int BACKGROUND_WIDTH = 900;
-    private static final int BACKGROUND_HEIGHT = 600;
+    private static final int BACKGROUND_WIDTH = Main.getFrameWidth();
+    private static final int BACKGROUND_HEIGHT = Main.getFrameHeight();
+    private static final float ACC_AMOUNT = 0.4f;
     
     //Properties
     private Image background;
@@ -33,19 +38,27 @@ public class GamePanel extends JPanel
     private double motion;
     private Timer motionTimer;
     private Timer gameTimer;
+    private Timer scoreTimer;
     private int delay;
     private int playAgain;
     private int resume;
+    private double score;
+    private boolean[] pressedKeyList;
+    private Point dirVector;
     
     public GamePanel()
-    {        
+    {
         setLayout( null );
         
         addImages();
         
         addButtons();
         
-        mainBall = new Ball( 0, 20, 50 );
+        //keyboard control declarations
+        pressedKeyList = new boolean[]{ false, false, false,false};
+        dirVector = new Point( 0, 0);
+        
+        mainBall = new EarthBall();
         lasers = new ArrayList<Laser>();
         painter = new Visuals();
         motion = 1.5;
@@ -55,17 +68,18 @@ public class GamePanel extends JPanel
         delay = 1000;
         gameTimer = new Timer( delay, new TimerListener() );
         gameTimer.start();
-
-        Main.saveGame.player.resetScore(); //set player's score to zero
+        score = 0;
+        scoreTimer = new Timer( 100, new ScoreListener() );
+        scoreTimer.start();
     }
     
     public void addImages()
     {
         try
         {
-            background = ImageIO.read( new File( "images/gameBackground.png" ) );
-            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
-            pauseIcon = ImageIO.read( new File( "images/pauseIcon.png" ) );
+            background = ImageIO.read( new File( "gameBackground.png" ) );
+            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+            pauseIcon = ImageIO.read( new File( "pauseIcon.png" ) );
         }
         
         catch( IOException exception ){}
@@ -100,25 +114,31 @@ public class GamePanel extends JPanel
         
         g.drawImage( background, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, null );
         
+        g.setFont( new Font( "SansSerif", Font.BOLD, 20 ) );
+        g.setColor( Color.WHITE );
+        g.drawString( "SCORE: " + score / 100.0, 395, 30 );
+        
         painter.drawBall( mainBall, g );
         
         for ( Laser toDraw: lasers )
         {
             painter.drawLaser( toDraw, g );
         }  
-        requestFocusInWindow(true);
+        requestFocusInWindow( true );
     }
     
     public void pause()
     {
         gameTimer.stop();
         motionTimer.stop();
+        scoreTimer.stop();
     }
     
     public void resume()
     {
         gameTimer.start();
         motionTimer.start();
+        scoreTimer.start();
     }
     
     private class PauseButtonListener implements ActionListener
@@ -126,8 +146,8 @@ public class GamePanel extends JPanel
         public void actionPerformed( ActionEvent event )
         {
             pause();
-            resume = JOptionPane.showConfirmDialog( GamePanel.this, "Game is paused! Resume?", 
-                                                   "ESCAPE ~ Paused", 0 );
+            resume = JOptionPane.showConfirmDialog( GamePanel.this, "Game is paused! Resume?\nCurrent score: " 
+                                                       + score / 100.0, "ESCAPE ~ Paused", 0 );
             if ( resume == 0 )
             {
                 resume();
@@ -139,40 +159,55 @@ public class GamePanel extends JPanel
     {
         public void actionPerformed( ActionEvent event )
         {
+            pause();
             Main.setPanel( new MainMenuPanel() );
         }
     }
     
     //Inner class
     private class BallListener extends KeyAdapter
-    {
+    {        
         @Override
         public void keyPressed( KeyEvent event )
         {
+            if ( event.getKeyCode() == KeyEvent.VK_UP )
+            {
+                pressedKeyList[0] = true;
+            }
             if ( event.getKeyCode() == KeyEvent.VK_RIGHT )
             {
-                mainBall.accelerate( 'r', motion ); 
+                pressedKeyList[1] = true;
             }
-            else if ( event.getKeyCode() == KeyEvent.VK_LEFT )
+            if ( event.getKeyCode() == KeyEvent.VK_DOWN )
             {
-                mainBall.accelerate( 'l', motion );
+                pressedKeyList[2] = true;
             }
-            else if ( event.getKeyCode() == KeyEvent.VK_UP )
+            if ( event.getKeyCode() == KeyEvent.VK_LEFT )
             {
-                mainBall.accelerate( 'u', motion );
+                pressedKeyList[3] = true;
             }
-            else if ( event.getKeyCode() == KeyEvent.VK_DOWN )
-            {
-                mainBall.accelerate( 'd', motion );
-            }
-            else
-            {
-                mainBall.accelerate( 'e', motion );
-            }
-            //mainBall.move();
-            repaint();
         }
-    } 
+        
+        public void keyReleased( KeyEvent event )
+        {
+            if ( event.getKeyCode() == KeyEvent.VK_UP )
+            {
+                pressedKeyList[0] = false;
+            }
+            if ( event.getKeyCode() == KeyEvent.VK_RIGHT )
+            {
+                pressedKeyList[1] = false;
+            }
+            if ( event.getKeyCode() == KeyEvent.VK_DOWN )
+            {
+                pressedKeyList[2] = false;
+            }
+            if ( event.getKeyCode() == KeyEvent.VK_LEFT )
+            {
+                pressedKeyList[3] = false;
+            }
+        }
+    }
     
     //Inner class
     private class MotionListener implements ActionListener
@@ -182,7 +217,7 @@ public class GamePanel extends JPanel
             {
                 for ( Laser check : lasers )
                 {
-                    if ( check.isTouched( mainBall ) ) 
+                    if ( check.isTouched( mainBall ) )
                     {
                         pause();
                         playAgain = LeaderboardControl.endGame(Main.saveGame.player);
@@ -197,10 +232,12 @@ public class GamePanel extends JPanel
                     }
                 }
             }
+            updateDirectionVector();
+            mainBall.accelerate( dirVector);
             mainBall.move();
             repaint();
         }
-    }  
+    }
     
     //Inner class
     private class TimerListener implements ActionListener
@@ -208,25 +245,61 @@ public class GamePanel extends JPanel
         @Override
         public void actionPerformed( ActionEvent event )
         {
-            //ADD HIGH SCORE TO PLAYER
-            Main.saveGame.player.updateScore(Main.saveGame.player.getScore() + 0.3);
-            //END ADD HIGH SCORE TO PLAYER
             lasers.add( new Laser() );
             repaint();
-            if ( delay >= 100 ) 
+            
+            if ( delay >= 100 )
             {
                 delay = delay - 1;
             }
-            for ( int i = 0; i < lasers.size(); i++ )
+            for ( int i = lasers.size() - 1; i >= 0; i--)
             {
-                //lasers.get( i ).incrementTimeAlive( 1 );
+                lasers.get( i ).incrementTimeAlive( 1 );
                 if ( !lasers.get( i ).isAlive() )
                 {
                     lasers.remove( i );
-                } 
+                }
             }
             Laser.incrementTimeToLive( 0.3 );
         }
-    }    
+    }
+    
+    private class ScoreListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed( ActionEvent event )
+        {
+            score = score + 10;
+            Main.saveGame.player.updateScore( score / 100.0 );
+            repaint();
+        }
+    }
+    
+    private void updateDirectionVector()
+    {
+        dirVector.setLocation( 0 , 0 );
+        
+        if( pressedKeyList[0])
+        {
+            dirVector.translate( 0, -1 );
+        }
+        if( pressedKeyList[1])
+        {
+            dirVector.translate( 1, 0);
+        }
+        if( pressedKeyList[2])
+        {
+            dirVector.translate( 0, 1 );
+        }
+        if( pressedKeyList[3])
+        {
+            dirVector.translate( -1, 0);
+        }
+        if( dirVector.getX() != 0 && dirVector.getY() != 0)
+        {
+            dirVector.scalarProduct( 1 / dirVector.getDistanceToOrigin() );
+        }
+        dirVector.scalarProduct( ACC_AMOUNT );
+        
+    }
 }
-

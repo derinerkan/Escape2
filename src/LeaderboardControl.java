@@ -17,8 +17,8 @@ public class LeaderboardControl
     {
         if(Main.saveGame.leaderboard.canAdd(toCheck)) addToLeaderboard(toCheck);
 
-        return JOptionPane.showConfirmDialog( Main.getMainFrame(), "Game Over! Play again?",
-                "ESCAPE ~ Game over", 0 );
+        return JOptionPane.showConfirmDialog( Main.getMainFrame(), "Game Over! Play again?\nScore: " +
+                    Main.saveGame.player.getScore(), "ESCAPE ~ Game over", 0 );
         //return wantToPlay;
     }
 

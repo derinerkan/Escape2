@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 public class SettingsPanel extends JPanel
 {
     //Constants
-    private static final int BACKGROUND_WIDTH = 900;
-    private static final int BACKGROUND_HEIGHT = 600;
+    private static final int BACKGROUND_WIDTH = Main.getFrameWidth();
+    private static final int BACKGROUND_HEIGHT = Main.getFrameHeight();
     
     //Properties
     private Image background;
@@ -35,9 +35,9 @@ public class SettingsPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "images/settingsBackground.jpg" ) );
-            settingsLabel = ImageIO.read( new File( "images/settingsLabel.png" ) );
-            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
+            background = ImageIO.read( new File( "settingsBackground.jpg" ) );
+            settingsLabel = ImageIO.read( new File( "settingsLabel.png" ) );
+            backArrow = ImageIO.read( new File( "backArrow.png" ) );
         }
         
         catch( IOException exception ){}

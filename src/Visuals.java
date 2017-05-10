@@ -16,15 +16,19 @@ import javax.imageio.ImageIO;
 public class Visuals
 {
     //properties
-    private BufferedImage ballImage;
+    private BufferedImage sunImage;
+    private BufferedImage moonImage;
+    private BufferedImage earthImage;
     
     public Visuals()
     {
         try
         {
-            ballImage = ImageIO.read( new File( "images/ballImage.png" ) );
+            sunImage = ImageIO.read( new File( "sunImage.png" ) );
+            moonImage = ImageIO.read( new File( "moonImage.png" ) );
+            earthImage = ImageIO.read( new File( "earthImage.png" ) );
         }
-        catch( IOException exception ){exception.printStackTrace();}
+        catch( IOException exception ){}
     }
     
     /**
@@ -35,9 +39,24 @@ public class Visuals
      */
     public void drawBall( Ball toDraw, Graphics g )
     {
-        g.drawImage( ballImage,( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
-                    ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
-                    2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        if ( toDraw instanceof SunBall )
+        {
+            g.drawImage( sunImage,( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
+        else if ( toDraw instanceof MoonBall )
+        {
+            g.drawImage( moonImage,( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
+        else if ( toDraw instanceof EarthBall )
+        {
+            g.drawImage( earthImage,( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
     }
     
     /**
@@ -50,7 +69,7 @@ public class Visuals
     {
         Graphics2D g2 = ( Graphics2D ) g;
         g2.setStroke( new BasicStroke( 4 ) );
-        g.setColor( toDraw.laserColor() );
+        g.setColor( Color.BLUE );
         g.drawLine( ( int ) toDraw.getP1().getX(), ( int ) toDraw.getP1().getY(), ( int ) toDraw.getP2().getX(),
                    ( int ) toDraw.getP2().getY() );
     }

@@ -1,12 +1,10 @@
-import java.io.Serializable;
-
 /**
  * This class represents the Ball, which the user controls in the game. It involves methods to move the Ball and access
  * relevant information.
  * @author BROJECT
  * @version 1.0
  */
-public class Ball implements Serializable
+public class Ball
 {
     //Constants
     private final int PRICE;
@@ -41,7 +39,7 @@ public class Ball implements Serializable
     
     /**
      * The copy constructor of the Ball, it takes the Ball to be copied as a parameter.
-     * @param other is the Ball to be copied.
+     * @param toCopy is the Ball to be copied.
      */
     public Ball( Ball other )
     {
@@ -212,10 +210,16 @@ public class Ball implements Serializable
             }
         }
     }
-    
+   
     public void move( ) //char direction, double amount )
     {
-        location.translate( velocity.getX(), velocity.getY() ); 
+        if ( location.getX() +  velocity.getX() <= Main.getFrameWidth() - RADIUS &&
+            location.getX() +  velocity.getX() >= RADIUS &&
+            location.getY() + velocity.getY() <= Main.getFrameHeight() - 2 * RADIUS &&
+            location.getY() +  velocity.getY() >= RADIUS )
+        {
+            location.translate( velocity.getX(), velocity.getY() ); 
+        }
         
         if ( velocity.getX() < 0 ) 
         {

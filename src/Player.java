@@ -152,5 +152,4 @@ public class Player implements Serializable
     {
         score = 0;
     }
-
 }

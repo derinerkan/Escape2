@@ -1,5 +1,3 @@
-import java.awt.*;
-
 /**
  * This class represents a Laser in the game. The Laser consists of the Points and a line connecting them. Thus, this
  * class involves methods to form this line segment and access relevant information.
@@ -11,12 +9,10 @@ public class Laser
     //Properties
     private Point p1;
     private Point p2;
-    private double timeAlive; //now represents the time this laser starts to exist
+    private double timeAlive;
     private static double timeToLive;
     private double length;
     private double slope; //additional, not in the UML
-    private final double lifespan = 3;//additional, not in the UML
-    private boolean kill;
     
     /**
      * The default constructor of the Laser. Produces a line segment of random position and random length.
@@ -50,9 +46,8 @@ public class Laser
         p2 = new Point( x2, y2 );
         
         slope = ( p2.getY() - p1.getY() ) / ( p2.getX() - p1.getX() );
-        timeAlive = timeToLive;
-        //timeToLive = 10; //or another constant, it should be determined
-        kill = false;
+        timeAlive = 0;
+        timeToLive = 10; //or another constant, it should be determined
     }
     
     /**
@@ -63,7 +58,6 @@ public class Laser
      */
     public boolean isTouched( Ball toCheck )
     {
-        if(kill) return true; //if the ball had been touched at any point so far, it will always be touched
         if ( toCheck.isTouchable() )
         {
             double m = this.getSlope();
@@ -80,7 +74,6 @@ public class Laser
             {
                 if ( dif <= r && x + r >= x1 && x - r <= x2 && y + r >= y1 && y - r <= y2 )
                 {
-                    kill = true;
                     return true;
                 }
                 return false;
@@ -89,14 +82,12 @@ public class Laser
             {
                 if ( dif <= r && x + r >= x2 && x - r <= x1 && y + r >= y1 && y - r <= y2 )
                 {
-                    kill = true;
                     return true;
                 }
                 return false;
             }
             if ( Math.abs( x - x1 ) <= r && y + r >= y1 && y - r <= y2 )
-            {
-                kill = true;
+            { 
                 return true;
             }
             return false;
@@ -141,7 +132,6 @@ public class Laser
     }
     
     /**
-     * @deprecated
      * Increments timeAlive by a specified specified amount.
      * @param increase is the specified amunt of incrementation.
      */
@@ -166,16 +156,6 @@ public class Laser
      */
     public boolean isAlive()
     {
-        return (timeToLive - timeAlive) < lifespan;
-    }
-
-    /**
-     * Determines the color of this lazer based on its lifetime
-     * @return red or blue
-     */
-    public Color laserColor()
-    {
-        if((timeToLive-timeAlive)/lifespan <= 0.1) return Color.BLUE;
-        else return Color.RED;
+        return timeToLive > timeAlive;
     }
 }
