@@ -15,10 +15,10 @@ public class LeaderboardControl
      */
     public static int endGame(Player toCheck)
     {
-        if(Main.saveGame.leaderboard.canAdd(toCheck)) addToLeaderboard(toCheck);
+        if(Main.saveGame.getLeaderboard().canAdd(toCheck)) addToLeaderboard(toCheck);
 
         return JOptionPane.showConfirmDialog( Main.getMainFrame(), "Game Over! Play again?\nScore: " +
-                    Main.saveGame.player.getScore(), "ESCAPE ~ Game over", 0 );
+                    Main.saveGame.getPlayer().getScore(), "ESCAPE ~ Game over", 0 );
         //return wantToPlay;
     }
 
@@ -29,9 +29,9 @@ public class LeaderboardControl
     public static void addToLeaderboard(Player toEnter)
     {
         //JFrame toDisp = Main.getMainFrame(); //the JFrame to display the option pane on
-        String name = JOptionPane.showInputDialog("Congratulations! You scored a high score");
+        String name = JOptionPane.showInputDialog("High Score! Your score:" + Main.saveGame.getPlayer().getScore() + "\n Your name:");
         toEnter.setName(name);
-        Main.saveGame.leaderboard.addPlayer(toEnter);
+        if(name != null) Main.saveGame.getLeaderboard().addPlayer(toEnter);
         Main.saveGame.saveGame();
     }
 }

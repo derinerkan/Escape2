@@ -70,8 +70,8 @@ public class LeaderboardPanel extends JPanel
         g.drawImage( leaderboardLabel, 160, 25, 600, 100, null );
 
         //list.setText(Main.saveGame.leaderboard.toString());
-        names.setText(Main.saveGame.leaderboard.namesToString());
-        scores.setText(Main.saveGame.leaderboard.scoresToString());
+        names.setText(Main.saveGame.getLeaderboard().namesToString());
+        scores.setText(Main.saveGame.getLeaderboard().scoresToString());
 
         g.setColor(Color.WHITE);
 
@@ -96,7 +96,7 @@ public class LeaderboardPanel extends JPanel
         add(list);
         Main.saveGame.saveGame();/**/
 
-        names = new JTextArea(Main.saveGame.leaderboard.namesToString());
+        names = new JTextArea(Main.saveGame.getLeaderboard().namesToString());
         names.setFont(new Font("Dialog", Font.ITALIC + Font.BOLD, 25));
         names.setForeground(Color.WHITE.darker());
         names.setBackground(new Color(0x00ff00ff, true));
@@ -104,7 +104,7 @@ public class LeaderboardPanel extends JPanel
         names.setEditable(false);
         names.setOpaque(false);
 
-        scores = new JTextArea(Main.saveGame.leaderboard.scoresToString());
+        scores = new JTextArea(Main.saveGame.getLeaderboard().scoresToString());
         scores.setFont(new Font("Dialog", Font.ITALIC + Font.BOLD, 25));
         scores.setForeground(Color.WHITE.darker());
         scores.setBackground(new Color(0x00ff00ff, true));
@@ -131,7 +131,7 @@ public class LeaderboardPanel extends JPanel
                 Player debugPlayer = new Player();
                 debugPlayer.setName(field.getText());
                 debugPlayer.updateScore(Double.MAX_VALUE);
-                Main.saveGame.leaderboard.addPlayer(debugPlayer);
+                Main.saveGame.getLeaderboard().addPlayer(debugPlayer);
                 repaint();
                 System.out.println(field.getText());
             }});

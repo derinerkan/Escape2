@@ -6,8 +6,8 @@ import java.io.*;
  */
 public class SaveGame
 {
-    public Player player;
-    public Leaderboard leaderboard;
+    private Player player;
+    private Leaderboard leaderboard;
     private final String pFilename = "player.txt";
     private final String lFilename = "leaderboard.txt";
 

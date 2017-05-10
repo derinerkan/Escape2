@@ -37,8 +37,15 @@ public class StorePanel extends JPanel
     
     public StorePanel()
     {
-        index = 0;
+        Ball equippedBall = Main.saveGame.getPlayer().currentBall();
+
         store = new Store();
+
+        for(int i = 0; i<Store.getBalls().size(); i++) //check the balls within the store's inventory and find the one used by the player
+        {
+            //System.out.println(Store.getBalls().get(i));
+            if(Store.getBalls().get(i).getClass() == equippedBall.getClass()) index = i;
+        }
         
         setLayout( null );
         
@@ -95,6 +102,7 @@ public class StorePanel extends JPanel
         rightButton.addActionListener( new ArrowListener() );
         leftButton.addActionListener( new ArrowListener() );
         backButton.addActionListener( new BackButtonListener() );
+        equipButton.addActionListener( new EquipListener());
         
         add( rightButton );
         add( leftButton );
@@ -169,12 +177,23 @@ public class StorePanel extends JPanel
                 }
                 repaint();
             }
-            else if(event.getSource() == equipButton)
-            {
-                Ball toSet = store.getBalls().get(index);
-                toSet.setOwned(true);
-                Main.saveGame.getPlayer().setBall(toSet);
-            }
+
+        }
+    }
+
+    private class EquipListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent event)
+        {
+            System.out.println("Equip Button");
+            System.out.println("Set to: " + store.getBalls().get(index).getClass().toString());
+
+            Ball toSet = store.getBalls().get(index);
+            toSet.setOwned(true);
+            Main.saveGame.getPlayer().setBall(toSet);
+            Main.saveGame.saveGame();
+
+            System.out.println(Main.saveGame.getPlayer().currentBall().getClass().toString());
         }
     }
 }

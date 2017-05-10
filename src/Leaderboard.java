@@ -36,7 +36,7 @@ public class Leaderboard implements Serializable
         {
             for (Player p : list)
             {
-                if (toAdd.getHighScore() >= p.getHighScore())
+                if (toAdd.getScore() >= p.getScore())
                 {
                     list.add(list.indexOf(p), toAddCopy);
                     if(list.size() > SIZE) list.remove(SIZE);
@@ -100,7 +100,12 @@ public class Leaderboard implements Serializable
     public String scoresToString()
     {
         StringBuffer output = new StringBuffer("");
-        for(Player p : list) output.append((p.getHighScore())).append("\n");
+        for(Player p : list)
+        {
+            output.append((p.getScore())).append("\n");
+            //System.out.println(p.getScore());
+        }
+        //System.out.println(output + "\n");
         return output.toString();
     }
 }

@@ -58,7 +58,9 @@ public class GamePanel extends JPanel
         pressedKeyList = new boolean[]{ false, false, false,false};
         dirVector = new Point( 0, 0);
         
-        mainBall = new EarthBall();
+        //mainBall = new EarthBall(); //deprecated debug statement
+        mainBall = Main.saveGame.getPlayer().currentBall();
+
         lasers = new ArrayList<Laser>();
         painter = new Visuals();
         motion = 1.5;
@@ -224,7 +226,7 @@ public class GamePanel extends JPanel
                     if ( check.isTouched( mainBall ) )
                     {
                         pause();
-                        playAgain = LeaderboardControl.endGame(Main.saveGame.player);
+                        playAgain = LeaderboardControl.endGame(Main.saveGame.getPlayer());
                         if ( playAgain == 0 )
                         {
                             restartGame();
@@ -274,7 +276,7 @@ public class GamePanel extends JPanel
         public void actionPerformed( ActionEvent event )
         {
             score = score + 10;
-            Main.saveGame.player.updateScore( score / 100.0 );
+            Main.saveGame.getPlayer().updateScore( score / 100.0 );
             repaint();
         }
     }
