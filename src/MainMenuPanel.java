@@ -13,8 +13,8 @@ import java.awt.event.ActionEvent;
 public class MainMenuPanel extends JPanel 
 { 
     //Constants
-    private static final int BACKGROUND_WIDTH = 900;
-    private static final int BACKGROUND_HEIGHT = 600;
+    private static final int BACKGROUND_WIDTH = Main.getFrameWidth();
+    private static final int BACKGROUND_HEIGHT = Main.getFrameHeight();
     
     //Properties
     private Image background;
@@ -43,27 +43,26 @@ public class MainMenuPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "images/menuBackground.jpg") );
-            logo = ImageIO.read( new File( "images/logo.png" ) );
-            playImage = ImageIO.read( new File( "images/play.png" ) );
-            storeImage = ImageIO.read( new File( "images/store.png" ) );
-            leaderboardImage = ImageIO.read( new File( "images/leaderboard.png" ) );
-            howToPlayImage = ImageIO.read( new File( "images/howToPlay.png" ) );
-            settingsImage = ImageIO.read( new File( "images/settingsButton.png" ) );
+            background = ImageIO.read( new File( "menuBackground.jpg") );
+            logo = ImageIO.read( new File( "logo.png" ) );
+            playImage = ImageIO.read( new File( "play.png" ) );
+            storeImage = ImageIO.read( new File( "store.png" ) );
+            leaderboardImage = ImageIO.read( new File( "leaderboard.png" ) );
+            howToPlayImage = ImageIO.read( new File( "howToPlay.png" ) );
+            settingsImage = ImageIO.read( new File( "settingsButton.png" ) );
         }
         
-        catch( IOException exception ){System.out.println(exception);exception.printStackTrace();}/**/
+        catch( IOException exception ){}
     }
     
     public void addButtons()
     {
-        playButton = new JButton( new ImageIcon( playImage.getScaledInstance( 300, 50, BufferedImage.TYPE_INT_ARGB ) ) );
-        storeButton = new JButton( new ImageIcon( storeImage.getScaledInstance( 300, 50, BufferedImage.TYPE_INT_ARGB ) ) );
-        leaderboardButton = new JButton( new ImageIcon( leaderboardImage.getScaledInstance( 300, 50, BufferedImage.TYPE_INT_ARGB ) ) );
-        howToPlayButton = new JButton( new ImageIcon( howToPlayImage.getScaledInstance( 300, 50, BufferedImage.TYPE_INT_ARGB ) ) );
+        playButton = new JButton( new ImageIcon( playImage.getScaledInstance( 300, 100, BufferedImage.TYPE_INT_ARGB ) ) );
+        storeButton = new JButton( new ImageIcon( storeImage.getScaledInstance( 300, 100, BufferedImage.TYPE_INT_ARGB ) ) );
+        leaderboardButton = new JButton( new ImageIcon( leaderboardImage.getScaledInstance( 300, 100, BufferedImage.TYPE_INT_ARGB ) ) );
+        howToPlayButton = new JButton( new ImageIcon( howToPlayImage.getScaledInstance( 300, 100, BufferedImage.TYPE_INT_ARGB ) ) );
         settingsButton = new JButton( new ImageIcon( settingsImage.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
-
-
+        
         playButton.setBounds( 300, 210, 300, 50 );
         storeButton.setBounds( 300, 270, 300, 50 );
         leaderboardButton.setBounds( 300, 330, 300, 50);
@@ -88,9 +87,9 @@ public class MainMenuPanel extends JPanel
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
-
+        
         g.drawImage( background, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, null );
-        g.drawImage( logo, 150, 25, 600, 150, null );/**/
+        g.drawImage( logo, 150, 25, 600, 150, null );
     }
     
     private class ClickListener implements ActionListener

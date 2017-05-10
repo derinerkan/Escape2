@@ -80,7 +80,6 @@ public class Leaderboard implements Serializable
         StringBuffer output = new StringBuffer("");
         for(String str : printMethod()) output.append(str).append("\n");
         return output.toString();
-        //return "TEST YARRAK";
     }
 
     /**
@@ -101,7 +100,7 @@ public class Leaderboard implements Serializable
     public String scoresToString()
     {
         StringBuffer output = new StringBuffer("");
-        for(Player p : list) output.append(Math.round(p.getHighScore())).append("\n");
+        for(Player p : list) output.append((p.getHighScore())).append("\n");
         return output.toString();
     }
 }

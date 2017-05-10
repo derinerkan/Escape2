@@ -38,9 +38,9 @@ public class LeaderboardPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "images/leaderboardBackground.jpg" ) );
-            leaderboardLabel = ImageIO.read( new File( "images/leaderboardLabel.png" ) );
-            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
+            background = ImageIO.read( new File( "leaderboardBackground.jpg" ) );
+            leaderboardLabel = ImageIO.read( new File( "leaderboardLabel.png" ) );
+            backArrow = ImageIO.read( new File( "backArrow.png" ) );
         }
         
         catch( IOException exception ){}

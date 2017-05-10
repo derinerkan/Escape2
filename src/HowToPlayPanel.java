@@ -14,8 +14,8 @@ import javax.swing.JScrollBar;
 public class HowToPlayPanel extends JPanel 
 {
     //Constants
-    private static final int BACKGROUND_WIDTH = 900;
-    private static final int BACKGROUND_HEIGHT = 600;
+    private static final int BACKGROUND_WIDTH = Main.getFrameWidth();
+    private static final int BACKGROUND_HEIGHT = Main.getFrameHeight();
     
     //Properties
     private Image background;
@@ -36,12 +36,12 @@ public class HowToPlayPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "images/howToPlayBackground.jpg" ) );
-            howToPlayLabel = ImageIO.read( new File( "images/howToPlayLabel.png" ) );
-            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
+            background = ImageIO.read( new File( "howToPlayBackground.jpg" ) );
+            howToPlayLabel = ImageIO.read( new File( "howToPlayLabel.png" ) );
+            backArrow = ImageIO.read( new File( "backArrow.png" ) );
         }
         
-        catch( IOException exception ){exception.printStackTrace();}
+        catch( IOException exception ){}
     }
     
     public void addButtons()

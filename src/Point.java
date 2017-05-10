@@ -1,12 +1,10 @@
-import java.io.Serializable;
-
 /**
  * This class represents a Point on the cartesian plane. It involves methods to control the Point and access relevant
  * information.
  * @author BROJECT
  * @version 1.0
  */
-public class Point implements Serializable
+public class Point 
 {
     //Properties
     private double x;
@@ -55,6 +53,11 @@ public class Point implements Serializable
     {
         this.x = this.x + x;
         this.y = this.y + y;
+    }
+    
+    public boolean equals( Point other )
+    {
+        return this.x == other.x &&  this.y == other.y;
     }
     
     /**
