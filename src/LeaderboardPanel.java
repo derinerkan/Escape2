@@ -29,7 +29,7 @@ public class LeaderboardPanel extends JPanel
         
         addButtons();
         drawText();
-        drawDebugBox();
+        //drawDebugBox();
     }
     
     public void addImages()

@@ -61,7 +61,7 @@ public class Leaderboard implements Serializable
         ArrayList<String> output = new ArrayList<String>();
         for(Player i: list)
         {
-            output.add(i.getName() + i.getScore());
+            output.add(i.getName() + "    " + i.getScore());
         }
         return output;
     }

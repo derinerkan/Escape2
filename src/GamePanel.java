@@ -55,6 +55,8 @@ public class GamePanel extends JPanel
         delay = 1000;
         gameTimer = new Timer( delay, new TimerListener() );
         gameTimer.start();
+
+        Main.saveGame.player.resetScore(); //set player's score to zero
     }
     
     public void addImages()
@@ -183,8 +185,7 @@ public class GamePanel extends JPanel
                     if ( check.isTouched( mainBall ) ) 
                     {
                         pause();
-                        playAgain = JOptionPane.showConfirmDialog( GamePanel.this, "Game Over! Play again?", 
-                                                                  "ESCAPE ~ Game over", 0 );
+                        playAgain = LeaderboardControl.endGame(Main.saveGame.player);
                         if ( playAgain == 0 )
                         {
                             restartGame();
@@ -207,6 +208,9 @@ public class GamePanel extends JPanel
         @Override
         public void actionPerformed( ActionEvent event )
         {
+            //ADD HIGH SCORE TO PLAYER
+            Main.saveGame.player.updateScore(Main.saveGame.player.getScore() + 0.3);
+            //END ADD HIGH SCORE TO PLAYER
             lasers.add( new Laser() );
             repaint();
             if ( delay >= 100 ) 

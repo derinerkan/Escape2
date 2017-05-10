@@ -45,4 +45,9 @@ public class Main
     {
         return FRAME_HEIGHT;
     }
+
+    public static JFrame getMainFrame()
+    {
+        return mainFrame;
+    }
 }
