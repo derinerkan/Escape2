@@ -29,7 +29,7 @@ public class LeaderboardControl
     public static void addToLeaderboard(Player toEnter)
     {
         //JFrame toDisp = Main.getMainFrame(); //the JFrame to display the option pane on
-        String name = JOptionPane.showInputDialog("High Score! Your score:" + Main.saveGame.getPlayer().getScore() + "\n Your name:");
+        String name = JOptionPane.showInputDialog("You entered the leaderboards! Your score:" + Main.saveGame.getPlayer().getScore() + "\n Your name:");
         toEnter.setName(name);
         if(name != null) Main.saveGame.getLeaderboard().addPlayer(toEnter);
         Main.saveGame.saveGame();

@@ -138,7 +138,8 @@ public class StorePanel extends JPanel
         
         g.setFont( new Font( "SansSerif", Font.BOLD, 20 ) );
         g.setColor( Color.WHITE );
-        g.drawString( "PRICE: " + store.getBalls().get( index ).getPrice(), 390, 540 );
+        g.drawString("MONEY: " + Main.saveGame.getPlayer().getMoney(), 320, 540);
+        g.drawString( "PRICE: " + store.getBalls().get( index ).getPrice(), 460, 540 );
     }
     
     private class BackButtonListener implements ActionListener
@@ -189,17 +190,23 @@ public class StorePanel extends JPanel
             System.out.println("Set to: " + store.getBalls().get(index).getClass().toString());
 
             Ball toSet = store.getBalls().get(index);
-            if(Main.saveGame.getPlayer().hasBall(toSet) || true) //debug statement
+            System.err.println(Main.saveGame.getPlayer().getMoney());
+
+            if(Main.saveGame.getPlayer().hasBall(toSet)) //debug statement
             {
+                System.err.println("Player has this ball already");
                 toSet.setOwned(true);
                 Main.saveGame.getPlayer().setBall(toSet);
             }
             else if(Main.saveGame.getPlayer().canSpend(toSet.getPrice()))
             {
+                System.err.println("Player bought the ball");
                 toSet.setOwned(true);
                 Main.saveGame.getPlayer().spendMoney(toSet.getPrice());
                 Main.saveGame.getPlayer().setBall(toSet);
+                System.err.println(Main.saveGame.getPlayer().getMoney());
             }
+            else System.err.println("The player does not have this ball and can't get it");
             Main.saveGame.saveGame();
 
             System.out.println(Main.saveGame.getPlayer().currentBall().getClass().toString());

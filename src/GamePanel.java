@@ -277,6 +277,9 @@ public class GamePanel extends JPanel
         {
             score = score + 10;
             Main.saveGame.getPlayer().updateScore( score / 100.0 );
+
+            if(score % 50 == 0) Main.saveGame.getPlayer().addMoney(1); //scale the increase in money
+
             repaint();
         }
     }

@@ -30,12 +30,13 @@ public class Leaderboard implements Serializable
             list.add(toAddCopy);
             return;
         }
-        System.err.println(this.toString());
+
 
         if(canAdd(toAdd)) //check if there is room for this player to enter the leaderboards
         {
             for (Player p : list)
             {
+                //System.err.println(p);
                 if (toAdd.getScore() >= p.getScore())
                 {
                     list.add(list.indexOf(p), toAddCopy);
@@ -43,7 +44,10 @@ public class Leaderboard implements Serializable
                     return;
                 }
             }
+            if(list.size() < SIZE) list.add(toAddCopy);
+
         }
+        //System.err.println(this.toString());
     }
 
     /**
@@ -53,8 +57,9 @@ public class Leaderboard implements Serializable
      */
     public boolean canAdd(Player toAdd)
     {
-        if(list.isEmpty() || list.size() < SIZE) return true;
-        return toAdd.getScore() > list.get(list.size() - 1).getScore();
+        return list.isEmpty() || (list.size() < SIZE) || (toAdd.getScore() > list.get(list.size() -1).getScore());
+        /*if(list.isEmpty() || list.size() < SIZE) return true;
+        return toAdd.getScore() > list.get(list.size() - 1).getScore();/**/
     }
 
     /**
