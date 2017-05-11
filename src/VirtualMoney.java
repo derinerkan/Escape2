@@ -1,9 +1,11 @@
+import java.io.Serializable;
+
 /**
  * Virtual Money class for Escape game
  * @author Escape
  * @version 1.0
  */
-public class VirtualMoney
+public class VirtualMoney implements Serializable
 {
     private int amount;
 
@@ -29,9 +31,14 @@ public class VirtualMoney
      * @param amount the amount to subtract
      * @return whether spending it was successful
      */
-    public void /**boolean*/ spendMoney(int amount)
+    public boolean spendMoney(int amount)
     {
-        this.amount -= amount;
+        if(this.amount >= amount)
+        {
+            this.amount -= amount;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -41,5 +48,16 @@ public class VirtualMoney
     public int getMoney()
     {
         return amount;
+    }
+
+
+    /**
+     * Check whether the given amount of money can be spent
+     * @param amount the amount to check
+     * @return true if it can be spent
+     */
+    public boolean canSpend(int amount)
+    {
+        return this.amount >= amount;
     }
 }

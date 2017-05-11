@@ -189,8 +189,17 @@ public class StorePanel extends JPanel
             System.out.println("Set to: " + store.getBalls().get(index).getClass().toString());
 
             Ball toSet = store.getBalls().get(index);
-            toSet.setOwned(true);
-            Main.saveGame.getPlayer().setBall(toSet);
+            if(Main.saveGame.getPlayer().hasBall(toSet) || true) //debug statement
+            {
+                toSet.setOwned(true);
+                Main.saveGame.getPlayer().setBall(toSet);
+            }
+            else if(Main.saveGame.getPlayer().canSpend(toSet.getPrice()))
+            {
+                toSet.setOwned(true);
+                Main.saveGame.getPlayer().spendMoney(toSet.getPrice());
+                Main.saveGame.getPlayer().setBall(toSet);
+            }
             Main.saveGame.saveGame();
 
             System.out.println(Main.saveGame.getPlayer().currentBall().getClass().toString());

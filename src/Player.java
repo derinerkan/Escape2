@@ -10,7 +10,7 @@ public class Player implements Serializable
 {
     private double score;
     private double highScore;
-    //protected VirtualMoney money;
+    protected VirtualMoney money;
     private String name;
     //private int ballIndex;
     private ArrayList<Ball> balls;
@@ -26,7 +26,7 @@ public class Player implements Serializable
     {
         score = 0;
         highScore = 0;
-        //money = new VirtualMoney();
+        money = new VirtualMoney();
         name = "";
         currentBall = new Ball(300,24,50);
         //ballIndex = 0;
@@ -42,7 +42,7 @@ public class Player implements Serializable
     {
         this.score = p.score;
         this.highScore = p.highScore;
-        //this.money = p.money;
+        this.money = p.money;
         this.name = p.name;
         this.currentBall = p.currentBall;
         //this.ballIndex = p.ballIndex;
@@ -151,5 +151,58 @@ public class Player implements Serializable
     public void resetScore()
     {
         score = 0;
+    }
+
+    /**
+     * Gets the money that this player has.
+     * @return their current money
+     */
+    public int getMoney()
+    {
+        return money.getMoney();
+    }
+
+    /**
+     * Modifies the player's money by the specified amount.
+     * @param amount how much to change it by
+     */
+    public void addMoney(int amount)
+    {
+        if(amount > 0) money.addMoney(amount);
+        //else if(amount < 0) money.spendMoney(amount);
+    }
+
+    /**
+     * Spends money from the player
+     * @param amount the amount to spend
+     * @return true if they could afford it
+     */
+    public boolean spendMoney(int amount)
+    {
+        return money.spendMoney(amount);
+    }
+
+    /**
+     * Check whether the player can spend money
+     * @param amount the amount that we want to spend
+     * @return true if that much can be spent
+     */
+    public boolean canSpend(int amount)
+    {
+        return money.canSpend(amount);
+    }
+
+    /**
+     * Check if the player has the given ball in their inventory
+     * @param ball the ball to be checked against
+     * @return true if the player has that ball
+     */
+    public boolean hasBall(Ball ball)
+    {
+        for(Ball pBall : balls)
+        {
+            if(ball.getClass() == pBall.getClass()) return true;
+        }
+        return false;
     }
 }
