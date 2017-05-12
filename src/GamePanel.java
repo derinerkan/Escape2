@@ -47,7 +47,10 @@ public class GamePanel extends JPanel
     private Point dirVector;
     private double pace;
     private Shield active;
-    
+
+    /**
+     * Creates a new game panel.
+     */
     public GamePanel()
     {
         setLayout( null );
@@ -78,7 +81,10 @@ public class GamePanel extends JPanel
         //scoreTimer.start();
         
     }
-    
+
+    /**
+     * Adds the images that this panel will be using.
+     */
     public void addImages()
     {
         try
@@ -89,9 +95,12 @@ public class GamePanel extends JPanel
             resumeIcon = ImageIO.read( new File( "images/resumeIcon.png" ) );
         }
         
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
-    
+
+    /**
+     * Adds buttons to this panel.
+     */
     public void addButtons()
     {
         backButton = new JButton( new ImageIcon( backArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
@@ -113,7 +122,10 @@ public class GamePanel extends JPanel
         add( backButton );
         add( pauseButton );
     }
-    
+
+    /**
+     * Restarts the game panel.
+     */
     public void restartGame()
     {
         balls.clear();
@@ -132,7 +144,12 @@ public class GamePanel extends JPanel
         scoreTimer.restart();
         //Main.setPanel( new GamePanel() );
     }
-    
+
+    /**
+     * Overrides the class in JPanel to draw the necessary components
+     * @param g the Graphics to use
+     */
+    @Override
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
@@ -165,14 +182,20 @@ public class GamePanel extends JPanel
             }
         requestFocusInWindow( true );
     }
-    
+
+    /**
+     * Stop timers and pause the game.
+     */
     public void pause()
     {
         gameTimer.stop();
         motionTimer.stop();
         scoreTimer.stop();
     }
-    
+
+    /**
+     * Resume the game and start timers again.
+     */
     public void resume()
     {
         gameTimer.start();
@@ -182,6 +205,7 @@ public class GamePanel extends JPanel
     
     private class PauseButtonListener implements ActionListener
     {
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             pause();
@@ -198,6 +222,7 @@ public class GamePanel extends JPanel
     
     private class BackButtonListener implements ActionListener
     {
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             pause();
@@ -230,7 +255,8 @@ public class GamePanel extends JPanel
                 pressedKeyList[3] = true;
             }
         }
-        
+
+        @Override
         public void keyReleased( KeyEvent event )
         {
             if ( event.getKeyCode() == KeyEvent.VK_UP )
@@ -401,16 +427,29 @@ public class GamePanel extends JPanel
     }
    
     // new methods
+
+    /**
+     * Gets the balls that this GamePanel has in use
+     * @return an ArrayList of the balls
+     */
     public ArrayList<Ball> getBalls()
     {
         return balls;
     }
-    
+
+    /**
+     * Set the balls in use for this GamePanel
+     * @param balls the balls to be used
+     */
     public void setBalls( ArrayList<Ball> balls)
     {
         this.balls = balls;
     }
-    
+
+    /**
+     * Add the given balls to this panel's collection
+     * @param toAdd the balls to be added
+     */
     public void addBalls( ArrayList<Ball> toAdd)
     {
         for( Ball ball: toAdd)
@@ -418,29 +457,47 @@ public class GamePanel extends JPanel
             this.balls.add( ball);
         }
     }
-    
+
+    /**
+     * Get the lasers that are used by this Panel
+     * @return the lazers in use
+     */
     public ArrayList<Laser> getLasers()
     {
         return lasers;
     }
-    
-    
+
+    /**
+     * Return the powerups that are used in this panel
+     * @return an arraylist of the powerups
+     */
     public ArrayList<PowerUp> getPowerUps()
     {
         return powerUps;
     }
-    
-    
+
+    /**
+     * Return the pace of the game
+     * @return the pace of the game
+     */
     public double getPace()
     {
         return pace;
     }
-    
+
+    /**
+     * Set the pace of the game.
+     * @param pace the pace to be set in double format
+     */
     public void setPace( double pace)
     {
         this.pace = pace;
     }
-    
+
+    /**
+     * Apply the given powerup to the game
+     * @param pu the powerup that will be applied
+     */
     private void applyPowerUp(PowerUp pu)
     {
         pu.apply( this);
