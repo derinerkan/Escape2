@@ -12,7 +12,11 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.Color;
 
-public class StorePanel extends JPanel 
+/**
+ * The store panel.
+ */
+
+public class StorePanel extends JPanel
 { 
     //Constants
     private static final int BACKGROUND_WIDTH = Main.getFrameWidth();
@@ -35,7 +39,10 @@ public class StorePanel extends JPanel
     private Store store;
     private BufferedImage equipImage;
     private BufferedImage equippedImage;
-    
+
+    /**
+     * Creates a new store panel.
+     */
     public StorePanel()
     {
         Ball equippedBall = Main.saveGame.getPlayer().currentBall();
@@ -59,8 +66,11 @@ public class StorePanel extends JPanel
         
         equipButton.setIcon( new ImageIcon( equippedImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
     }
-    
-    public void addImages()
+
+    /**
+     * Add the images that will be used
+     */
+    private void addImages()
     {
         try
         {
@@ -76,10 +86,13 @@ public class StorePanel extends JPanel
             equippedImage = ImageIO.read( new File( "images/equippedIcon.png" ) );
         }
         
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
-    
-    public void addButtons()
+
+    /**
+     * Add the buttons that will be used
+     */
+    private void addButtons()
     {
         rightButton = new JButton( new ImageIcon( rightArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
         leftButton = new JButton( new ImageIcon( leftArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
@@ -114,7 +127,8 @@ public class StorePanel extends JPanel
         add( backButton );
         add( equipButton );
     }
-    
+
+    @Override
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
@@ -122,19 +136,19 @@ public class StorePanel extends JPanel
         g.drawImage( background, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, null );
         g.drawImage( storeLabel, 250, 25, 400, 100, null );
         
-        if ( store.getBalls().get( index ) instanceof SunBall )
+        if ( Store.getBalls().get( index ) instanceof SunBall )
         {
             g.drawImage( earthBall, 180, 250, 100, 100, null );
             g.drawImage( sunBall, 300, 150, 300, 300, null );
             g.drawImage( moonBall, 620, 250 , 100, 100, null );
         }
-        else if ( store.getBalls().get( index ) instanceof EarthBall )
+        else if ( Store.getBalls().get( index ) instanceof EarthBall )
         {
             g.drawImage( moonBall, 180, 250, 100, 100, null );
             g.drawImage( earthBall, 300, 150, 300, 300, null );
             g.drawImage( sunBall, 620, 250 , 100, 100, null );
         }
-        else if ( store.getBalls().get( index ) instanceof MoonBall )
+        else if ( Store.getBalls().get( index ) instanceof MoonBall )
         {
             g.drawImage( sunBall, 180, 250, 100, 100, null );
             g.drawImage( moonBall, 300, 150, 300, 300, null );
@@ -144,11 +158,12 @@ public class StorePanel extends JPanel
         g.setFont( new Font( "SansSerif", Font.BOLD, 20 ) );
         g.setColor( Color.WHITE );
         g.drawString("MONEY: " + Main.saveGame.getPlayer().getMoney(), 300, 540);
-        g.drawString( "PRICE: " + store.getBalls().get( index ).getPrice(), 480, 540 );
+        g.drawString( "PRICE: " + Store.getBalls().get( index ).getPrice(), 480, 540 );
     }
     
     private class BackButtonListener implements ActionListener
     {
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             Main.getStack().show( Main.getCards(), "menu" );
@@ -158,11 +173,12 @@ public class StorePanel extends JPanel
     
     private class ArrowListener implements ActionListener
     {
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             if ( event.getSource() == rightButton )
             {
-                if ( index == store.getBalls().size() - 1 )
+                if ( index == Store.getBalls().size() - 1 )
                 {
                     index = 0;
                 }
@@ -176,7 +192,7 @@ public class StorePanel extends JPanel
             {
                 if ( index == 0 )
                 {
-                    index = store.getBalls().size() - 1;
+                    index = Store.getBalls().size() - 1;
                 }
                 else
                 {
@@ -184,7 +200,7 @@ public class StorePanel extends JPanel
                 }
                 repaint();
             }
-            Ball toSet = store.getBalls().get(index);
+            Ball toSet = Store.getBalls().get(index);
             if ( toSet != Main.saveGame.getPlayer().currentBall() ) 
             {
                 equipButton.setIcon( new ImageIcon( equipImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
@@ -198,12 +214,13 @@ public class StorePanel extends JPanel
 
     private class EquipListener implements ActionListener
     {
+        @Override
         public void actionPerformed(ActionEvent event)
         {
             System.out.println("Equip Button");
-            System.out.println("Set to: " + store.getBalls().get(index).getClass().toString());
+            System.out.println("Set to: " + Store.getBalls().get(index).getClass().toString());
 
-            Ball toSet = store.getBalls().get(index);
+            Ball toSet = Store.getBalls().get(index);
             System.err.println(Main.saveGame.getPlayer().getMoney());
 
             if(Main.saveGame.getPlayer().hasBall(toSet)) //debug statement

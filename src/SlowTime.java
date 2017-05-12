@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
  * @author BROJECT
  * @version 1.0
  */
+
 public class SlowTime extends PowerUp
 {
     //Constants

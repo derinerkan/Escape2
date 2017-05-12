@@ -5,6 +5,7 @@ import java.util.ArrayList;
  * @author BROJECT
  * @version 1.0
  */
+
 public class Multiply extends PowerUp
 {
     //Constants

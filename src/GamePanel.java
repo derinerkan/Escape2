@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Font;
 
+
 public class GamePanel extends JPanel
 {
     //Constants
@@ -85,7 +86,7 @@ public class GamePanel extends JPanel
     /**
      * Adds the images that this panel will be using.
      */
-    public void addImages()
+    private void addImages()
     {
         try
         {
@@ -101,7 +102,7 @@ public class GamePanel extends JPanel
     /**
      * Adds buttons to this panel.
      */
-    public void addButtons()
+    private void addButtons()
     {
         backButton = new JButton( new ImageIcon( backArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
         pauseButton = new JButton( new ImageIcon( pauseIcon.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
@@ -186,7 +187,7 @@ public class GamePanel extends JPanel
     /**
      * Stop timers and pause the game.
      */
-    public void pause()
+    private void pause()
     {
         gameTimer.stop();
         motionTimer.stop();
@@ -196,7 +197,7 @@ public class GamePanel extends JPanel
     /**
      * Resume the game and start timers again.
      */
-    public void resume()
+    private void resume()
     {
         gameTimer.start();
         motionTimer.start();
@@ -452,10 +453,7 @@ public class GamePanel extends JPanel
      */
     public void addBalls( ArrayList<Ball> toAdd)
     {
-        for( Ball ball: toAdd)
-        {
-            this.balls.add( ball);
-        }
+        this.balls.addAll(toAdd);
     }
 
     /**

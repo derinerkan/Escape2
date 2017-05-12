@@ -22,6 +22,7 @@ import java.awt.event.*;
  * @author BROJECT
  * @version 2017-05-12
  */
+
 public class HowToPlayPanel extends JPanel
 {
     //Constants
@@ -63,7 +64,7 @@ public class HowToPlayPanel extends JPanel
     /**
      * Read the images that this panel will use
      */
-    public void addImages()
+    private void addImages()
     {
         try
         {
@@ -82,13 +83,13 @@ public class HowToPlayPanel extends JPanel
             instructions.add(fourth);
         }
 
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
 
     /**
      * Add the buttons that will be used in this panel
      */
-    public void addButtons()
+    private void addButtons()
     {
         rightButton = new JButton( new ImageIcon( rightArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
         leftButton = new JButton( new ImageIcon( leftArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );

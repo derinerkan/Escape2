@@ -4,6 +4,7 @@
  * @author BROJECT
  * @version 1.0
  */
+
 public class Laser
 {
     //Properties
@@ -100,15 +101,8 @@ public class Laser
         projV = segVUnit.scalar( proj );
         closest = projV.sum( p1 );
         distV = toCheck.getLocation().dif( closest );
-        
-        if ( distV.getDistanceToOrigin() < toCheck.getRadius() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
+        return distV.getDistanceToOrigin() < toCheck.getRadius();
     }
     
     /**

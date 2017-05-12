@@ -7,6 +7,11 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+/**
+ * Main class of the project: starts the game.
+ * @author BROJECT
+ * @version 2017-05-12
+ */
 public class Main 
 {
     public static void main( String [] args )
@@ -24,8 +29,11 @@ public class Main
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
     private static final String TITLE = "ESCAPE";
-    
-    public Main()
+
+    /**
+     * Create the main menu
+     */
+    private Main()
     {
         saveGame = new SaveGame();
         gamePanel = new GamePanel();
@@ -46,38 +54,64 @@ public class Main
         mainFrame.setVisible( true );
         startMusic();
     }
-    
+
+    /**
+     * Get the stack as a CardLayout
+     * @return the card layout
+     */
     public static CardLayout getStack()
     {
         return stack;
     }
-    
+
+    /**
+     * Start the game.
+     */
     public static void startGame()
     {
         ( (GamePanel) gamePanel).restartGame();
     }
-    
+
+    /**
+     * Get the cards in this layout.
+     * @return the cards
+     */
     public static JPanel getCards()
     {
         return cards;
     }
 
+    /**
+     * Return the frame width.
+     * @return the frame width
+     */
     public static int getFrameWidth()
     {
         return FRAME_WIDTH;
     }
-    
+
+    /**
+     * Return the frame height
+     * @return the frame height
+     */
     public static int getFrameHeight()
     {
         return FRAME_HEIGHT;
     }
 
+    /**
+     * Gets the main frame in this game
+     * @return the main frame
+     */
     public static JFrame getMainFrame()
     {
         return mainFrame;
     }
-    
-    public void startMusic()
+
+    /**
+     * Start playing music.
+     */
+    private void startMusic()
     {
         try
         {

@@ -39,7 +39,7 @@ public class SaveGame
                 if (!new File(PFILE_NAME).exists()) new File(PFILE_NAME).createNewFile();
                 if (!new File(LFILE_NAME).exists()) new File(LFILE_NAME).createNewFile();
             }
-            catch(Exception ex){}
+            catch(Exception ex){ex.printStackTrace();}
         }
     }
     

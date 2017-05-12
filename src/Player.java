@@ -5,12 +5,12 @@ import java.io.Serializable;
  * Player class for Escape game
  * @author BROJECT
  * @version 1.0
- */
+*/
 public class Player implements Serializable
 {
     private double score;
     private double highScore;
-    protected VirtualMoney money;
+    private VirtualMoney money;
     private String name;
     private ArrayList<Ball> balls;
     private boolean isPlaying;

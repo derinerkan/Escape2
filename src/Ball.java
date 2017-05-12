@@ -6,6 +6,7 @@ import java.io.Serializable;
  * @author BROJECT
  * @version 1.0
  */
+
 public class Ball implements Serializable
 {
     //Constants
@@ -141,7 +142,7 @@ public class Ball implements Serializable
     
     /**
      * multiplies the current velocity of the ball wit a given scalar
-     * @return velocity is the current velocity of the Ball.
+     *
      */
     public void multiplyVelocity( double scalar)
     {

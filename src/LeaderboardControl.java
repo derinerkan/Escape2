@@ -25,7 +25,7 @@ public class LeaderboardControl
      * If the player is eligible to enter the leaderboard, enter them
      * @param toEnter the player to be entered
      */
-    public static void addToLeaderboard(Player toEnter)
+    private static void addToLeaderboard(Player toEnter)
     {
         String name = JOptionPane.showInputDialog( "You entered the leaderboard! Your score:" +
                                                   Main.saveGame.getPlayer().getScore() + "\n Your name:" );

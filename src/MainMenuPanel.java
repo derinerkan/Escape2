@@ -10,6 +10,11 @@ import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * The main menu panel with all the buttons in it
+ * @author BROJECT
+ * @version 2017-05-12
+ */
 public class MainMenuPanel extends JPanel 
 { 
     //Constants
@@ -29,7 +34,10 @@ public class MainMenuPanel extends JPanel
     private BufferedImage leaderboardImage;
     private BufferedImage howToPlayImage;
     private BufferedImage settingsImage;
-    
+
+    /**
+     * Create a new MainMenuPanel
+     */
     public MainMenuPanel()
     {
         setLayout(null);
@@ -38,8 +46,11 @@ public class MainMenuPanel extends JPanel
         
         addButtons();
     }
-    
-    public void addImages()
+
+    /**
+     * Add the images that we will be using
+     */
+    private void addImages()
     {
         try
         {
@@ -52,10 +63,13 @@ public class MainMenuPanel extends JPanel
             settingsImage = ImageIO.read( new File( "images/settingsButton.png" ) );
         }
         
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
-    
-    public void addButtons()
+
+    /**
+     * Add the buttons that will be used
+     */
+    private void addButtons()
     {
         playButton = new JButton( new ImageIcon( playImage.getScaledInstance( 300, 100, BufferedImage.TYPE_INT_ARGB ) ) );
         storeButton = new JButton( new ImageIcon( storeImage.getScaledInstance( 300, 100, BufferedImage.TYPE_INT_ARGB ) ) );
@@ -97,7 +111,8 @@ public class MainMenuPanel extends JPanel
         add( howToPlayButton );
         add( settingsButton );
     }
-    
+
+    @Override
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
@@ -111,24 +126,24 @@ public class MainMenuPanel extends JPanel
         @Override
         public void actionPerformed( ActionEvent event ) 
         {
-            if ( ( JButton )event.getSource() == playButton )
+            if ( event.getSource() == playButton )
             {
                 Main.getStack().show( Main.getCards(), "game" );
                 Main.startGame();
             }
-            else if ( ( JButton )event.getSource() == storeButton )
+            else if ( event.getSource() == storeButton )
             {
                 Main.getStack().show( Main.getCards(), "store" );
             }
-            else if ( ( JButton )event.getSource() == leaderboardButton )
+            else if ( event.getSource() == leaderboardButton )
             {
                 Main.getStack().show( Main.getCards(), "leaderboard" );
             }
-            else if ( ( JButton )event.getSource() == howToPlayButton )
+            else if ( event.getSource() == howToPlayButton )
             {
                 Main.getStack().show( Main.getCards(), "howToPlay" );
             }
-            else if ( ( JButton )event.getSource() == settingsButton )
+            else if ( event.getSource() == settingsButton )
             {
                 Main.getStack().show( Main.getCards(), "settings" );
             }

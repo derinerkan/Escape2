@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Leaderboard implements Serializable
 {
     //Constants
-    final int SIZE = 10;
+    private final int SIZE = 10;
     
     //Properties
     private ArrayList<Player> list;
@@ -71,7 +71,7 @@ public class Leaderboard implements Serializable
      * Returns an ArrayList<String of players on the leaderboard
      * @return the players on the list
      */
-    public ArrayList<String> printMethod()
+    private ArrayList<String> printMethod()
     {
         ArrayList<String> output = new ArrayList<String>();
         for( Player i: list )

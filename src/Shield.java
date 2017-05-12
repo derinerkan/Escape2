@@ -9,6 +9,7 @@ import java.awt.Graphics;
  * @author BROJECT
  * @version 1.0
  */
+
 public class Shield extends PowerUp
 {       
     //Constants

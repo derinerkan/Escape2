@@ -23,7 +23,10 @@ public class Visuals
     private BufferedImage slowTime;
     private BufferedImage shield;
     private BufferedImage laserKiller;
-    
+
+    /**
+     * Create the visuals that we want to use.
+     */
     public Visuals()
     {
         try
@@ -36,7 +39,7 @@ public class Visuals
             shield = ImageIO.read( new File( "images/shield.png" ) );
             laserKiller = ImageIO.read( new File( "images/laserkiller.png" ) );
         }
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
     
     /**
@@ -81,8 +84,12 @@ public class Visuals
         g.drawLine( ( int ) toDraw.getP1().getX(), ( int ) toDraw.getP1().getY(), ( int ) toDraw.getP2().getX(),
                    ( int ) toDraw.getP2().getY() );
     }
-    
-    
+
+    /**
+     * Draw a particular powerup
+     * @param toDraw the powerup to be drawn
+     * @param g the graphics to draw it
+     */
     public void drawPowerUp( PowerUp toDraw, Graphics g )
     {
         if ( toDraw instanceof SlowTime )
@@ -110,8 +117,14 @@ public class Visuals
                         2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
         }
     }
-    
-     public void drawPowerUpEffect( PowerUp toDraw, Ball toEffect, Graphics g ) // Work in progress
+
+    /**
+     * Draw the powerup effect on the ball
+     * @param toDraw the powerup to be drawn
+     * @param toEffect the ball to have an effect on
+     * @param g the graphics to draw it
+     */
+    public void drawPowerUpEffect( PowerUp toDraw, Ball toEffect, Graphics g ) // Work in progress
     {
             g.setColor( new Color( 255, 165, 0, 130 ) );
             g.fillOval( ( int ) toEffect.getLocation().getX() - toEffect.getRadius() - 15 , 

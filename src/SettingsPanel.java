@@ -11,6 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+/**
+ * Settings panel for Escape
+ * @author ESCAPE
+ * @version 2017-05-12
+ */
+
 public class SettingsPanel extends JPanel
 {
     //Constants
@@ -23,7 +29,10 @@ public class SettingsPanel extends JPanel
     private BufferedImage backArrow;
     private JButton backButton;
     private JSlider soundSlider;
-    
+
+    /**
+     * Creates a new SettingsPanel
+     */
     public SettingsPanel()
     {
         setLayout( null );
@@ -32,8 +41,11 @@ public class SettingsPanel extends JPanel
         
         addButtons();
     }
-    
-    public void addImages()
+
+    /**
+     * Add the images that we will be using
+     */
+    private void addImages()
     {
         try
         {
@@ -42,10 +54,13 @@ public class SettingsPanel extends JPanel
             backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
         
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
-    
-    public void addButtons()
+
+    /**
+     * Add the buttons that we will be using
+     */
+    private void addButtons()
     {
         soundSlider = new JSlider( 0, 100, 50 );
         
@@ -62,7 +77,8 @@ public class SettingsPanel extends JPanel
         add( soundSlider );
         add( backButton );
     }
-    
+
+    @Override
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
@@ -73,6 +89,7 @@ public class SettingsPanel extends JPanel
     
     private class BackButtonListener implements ActionListener
     {
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             Main.getStack().show( Main.getCards(), "menu" );

@@ -1,0 +1,92 @@
+@startuml
+
+class Ball extends Serializable{
+private double ballFriction
+private boolean isOwned
+private Point location
+private double MAX_SPEED
+private int PRICE
+private int RADIUS
+private boolean touchable
+private Point velocity
+
+public Ball(Ball other)
+public Ball(int price, int radius, double maxSpeed)
+
+public Ball createDeepCopy()
+public void setPosition(Point position)
+public void translate(Point vector)
+public void accelerate(Point vector)
+public void setVelocity(Point vector)
+public Point getLocation()
+public Point getVelocity()
+public void multiplyVelocity(double scalar)
+public int getRadius()
+public boolean isTouchable()
+public int getPrice()
+public void setTouchable(boolean toSet)
+public void setOwned(Boolean toSet)
+public boolean isOwned()
+public double getSpeed()
+public void accelerate(char direction, double amount)
+public void move()
+}
+
+class EarthBall extends Ball{
+public EarthBall()
+}
+
+class GamePanel extends JPanel{
+private class BackButtonListener
+private class BallListener
+private class MotionListener
+private class PauseButtonListener
+private class ScoreListener
+private class TimerListener
+
+private static float ACC_AMOUNT
+private Shield active
+private BufferedImage backArrow
+private JButton backButton
+private Image background
+private static int BACKGROUND_HEIGHT
+private static int BACKGROUND_WIDTH
+private ArrayList<Ball> balls
+private int delay
+private Point dirVector
+private Timer gameTimer
+private ArrayList<Laser> lasers
+private Timer motionTimer
+private double pace
+private Visuals painter
+private JButton pauseButton
+private BufferedImage pauseIcon
+private int playAgain
+private static float POWER_UP_RARITY
+private ArrayList<PowerUp> powerUps
+private boolean[] pressedKeyList
+private int resume
+private BufferedImage resumeIcon
+private double score
+private Timer scoreTimer
+
+public GamePanel()
+public void addImages()
+public void addButtons()
+public void restartGame()
+public void paintComponent(Graphics g)
+public void pause()
+public void resume()
+private void updateDirectionVector()
+public ArrayList<Ball> getBalls()
+public void setBalls(ArrayList<Ball> balls)
+public void addBalls(ArrayList<Ball> toAdd)
+public ArrayList<Laser> getLasers()
+public ArrayList<PowerUp> getPowerUps()
+public double getPace()
+public void setPace(double pace)
+public void applyPowerUp(PowerUp pu)
+
+}
+
+@enduml

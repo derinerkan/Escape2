@@ -8,7 +8,13 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class LeaderboardPanel extends JPanel 
+/**
+ * The class to render the Leaderboards
+ * @author BROJECT
+ * @version 2017-05-12
+ */
+
+public class LeaderboardPanel extends JPanel
 {
     //Constants
     private static final int BACKGROUND_WIDTH = 900;
@@ -22,7 +28,10 @@ public class LeaderboardPanel extends JPanel
     //private JTextArea list;
     private JTextArea names;
     private JTextArea scores;
-    
+
+    /**
+     * Creates a new LeaderboardPanel
+     */
     public LeaderboardPanel()
     {
         setLayout( null );
@@ -33,8 +42,11 @@ public class LeaderboardPanel extends JPanel
         drawText();
         //drawDebugBox();
     }
-    
-    public void addImages()
+
+    /**
+     * Add the images that we are going to use
+     */
+    private void addImages()
     {
         try
         {
@@ -42,10 +54,13 @@ public class LeaderboardPanel extends JPanel
             leaderboardLabel = ImageIO.read( new File( "images/leaderboardLabel.png" ) );
             backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
-        catch( IOException exception ){}
+        catch( IOException exception ){exception.printStackTrace();}
     }
-    
-    public void addButtons()
+
+    /**
+     * Add the buttons we will use
+     */
+    private void addButtons()
     {
         backButton = new JButton( new ImageIcon( backArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
         
@@ -59,7 +74,8 @@ public class LeaderboardPanel extends JPanel
         
         add( backButton );
     }
-    
+
+    @Override
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
@@ -78,9 +94,12 @@ public class LeaderboardPanel extends JPanel
 
     }
 
-    public void drawText()
+    /**
+     * Draws the text that this leaderboard will use
+     */
+    private void drawText()
     {
-        /*
+        /* //DEPRECATED CODE THAT WILL RENDER A SIMPLER LEADERBOARD FOR SIMPLER TIMES
         list = new JTextArea(Main.saveGame.leaderboard.toString());
         Font font = list.getFont();
         font = new Font(font.getName(),Font.ITALIC + Font.BOLD, 25);
@@ -138,6 +157,7 @@ public class LeaderboardPanel extends JPanel
     
     private class BackButtonListener implements ActionListener
     {
+        @Override
         public void actionPerformed( ActionEvent event )
         {
             Main.getStack().show( Main.getCards(), "menu" );
