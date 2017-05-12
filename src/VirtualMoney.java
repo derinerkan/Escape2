@@ -2,13 +2,13 @@ import java.io.Serializable;
 
 /**
  * Virtual Money class for Escape game
- * @author Escape
+ * @author BROJECT
  * @version 1.0
  */
 public class VirtualMoney implements Serializable
 {
     private int amount;
-
+    
     /**
      * Initializes a VirtualMoney with zero money
      */
@@ -16,7 +16,7 @@ public class VirtualMoney implements Serializable
     {
         amount = 0;
     }
-
+    
     /**
      * Add some money to this account
      * @param amount the amount to add as an integer
@@ -25,7 +25,7 @@ public class VirtualMoney implements Serializable
     {
         this.amount += amount;
     }
-
+    
     /**
      * Spend money from this account
      * @param amount the amount to subtract
@@ -40,7 +40,7 @@ public class VirtualMoney implements Serializable
         }
         return false;
     }
-
+    
     /**
      * Get the amount of money in this wallet
      * @return the amount
@@ -49,8 +49,8 @@ public class VirtualMoney implements Serializable
     {
         return amount;
     }
-
-
+    
+    
     /**
      * Check whether the given amount of money can be spent
      * @param amount the amount to check

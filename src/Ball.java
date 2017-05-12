@@ -54,6 +54,28 @@ public class Ball implements Serializable
     }
     
     /**
+     * This method creates a copy of another Ball with this reference. It returns the copy.
+     * @return is the copied ball. 
+     */
+    public Ball createDeepCopy()
+    {
+        if ( this instanceof SunBall)
+        {
+            return new SunBall();
+        }
+        if ( this instanceof EarthBall)
+        {
+            return new EarthBall();
+        }
+        if ( this instanceof MoonBall)
+        {
+            return new MoonBall();
+        }
+        throw
+            new Error( " Ball not found");
+        
+    }
+    /**
      * Sets the location of the Ball to a specified Point.
      * @param position is the specified Point which will be the location of the Ball.
      */
@@ -73,7 +95,7 @@ public class Ball implements Serializable
     {
         location.translate( vector.getX(), vector.getY() );
     }
-       
+    
     /**
      * Accelerates the ball with respect to a specified acceleration vector.
      * @param vector is the specified acceleration vector.
@@ -115,6 +137,15 @@ public class Ball implements Serializable
     public Point getVelocity()
     {
         return velocity;
+    }
+    
+    /**
+     * multiplies the current velocity of the ball wit a given scalar
+     * @return velocity is the current velocity of the Ball.
+     */
+    public void multiplyVelocity( double scalar)
+    {
+        velocity.scalarProduct( scalar);
     }
     
     /**
@@ -180,7 +211,11 @@ public class Ball implements Serializable
         return velocity.getDistanceToOrigin();
     }
     
-    //****************************************************************************
+    /**
+     * Changes the acceleration of the ball by a given amount in a given direction.
+     * @param direction is the direction in which the ball will accelerate.
+     * @param amount is the amount of acceleration that will be added.
+     */
     public void accelerate( char direction, double amount )
     {
         if ( velocity.getY() >=  -6 )
@@ -212,8 +247,11 @@ public class Ball implements Serializable
             }
         }
     }
-   
-    public void move( ) //char direction, double amount )
+    
+    /**
+     * Moves the ball with respect to its current velocity
+     */
+    public void move( ) 
     {
         if ( location.getX() +  velocity.getX() <= Main.getFrameWidth() - RADIUS &&
             location.getX() +  velocity.getX() >= RADIUS &&
@@ -221,6 +259,34 @@ public class Ball implements Serializable
             location.getY() +  velocity.getY() >= RADIUS )
         {
             location.translate( velocity.getX(), velocity.getY() ); 
+        }
+        else
+        {
+            if( location.getX() + velocity.getX() < RADIUS )
+            {
+                velocity.setLocation( 0, velocity.getY());
+                location.translate( 0, velocity.getY() );
+                location.setLocation( RADIUS, location.getY());
+            }
+            else if( location.getX() + velocity.getX() > Main.getFrameWidth() - RADIUS)
+            {
+                velocity.setLocation( 0, velocity.getY());
+                location.translate( 0, velocity.getY() );
+                location.setLocation( Main.getFrameWidth() - RADIUS, location.getY());
+            }
+            
+            if( location.getY() +  velocity.getY() < RADIUS )
+            {
+                velocity.setLocation( velocity.getX(), 0);
+                location.translate( velocity.getX(), 0);
+                location.setLocation( location.getX(), RADIUS);
+            }
+            else if( location.getY() + velocity.getY() > Main.getFrameHeight() - 2 * RADIUS )
+            {
+                velocity.setLocation( velocity.getX(), 0);
+                location.translate( velocity.getX(), 0);
+                location.setLocation( location.getX(), Main.getFrameHeight() - 2 * RADIUS);
+            }
         }
         
         if ( velocity.getX() < 0 ) 

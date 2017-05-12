@@ -34,17 +34,21 @@ public class StorePanel extends JPanel
     private int index;
     private Store store;
     private BufferedImage equipImage;
+    private BufferedImage equippedImage;
     
     public StorePanel()
     {
         Ball equippedBall = Main.saveGame.getPlayer().currentBall();
-
+        equippedBall.setOwned( true );
         store = new Store();
 
+        Main.saveGame.getPlayer().setBall( equippedBall );
+        //index = Store.getBalls().indexOf( equippedBall );
+        
         for(int i = 0; i<Store.getBalls().size(); i++) //check the balls within the store's inventory and find the one used by the player
         {
             //System.out.println(Store.getBalls().get(i));
-            if(Store.getBalls().get(i).getClass() == equippedBall.getClass()) index = i;
+            if( Store.getBalls().get(i).getClass() == equippedBall.getClass() ) index = i;
         }
         
         setLayout( null );
@@ -52,6 +56,8 @@ public class StorePanel extends JPanel
         addImages();
         
         addButtons();
+        
+        equipButton.setIcon( new ImageIcon( equippedImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
     }
     
     public void addImages()
@@ -67,16 +73,7 @@ public class StorePanel extends JPanel
             moonBall = ImageIO.read( new File( "images/moonImage.png" ) );
             earthBall = ImageIO.read( new File( "images/earthImage.png" ) );
             equipImage = ImageIO.read( new File( "images/equipButton.png" ) );
-
-//            background = ImageIO.read( new File( "storeBackground.jpg" ) );
-//            storeLabel = ImageIO.read( new File( "storeLabel.png" ) );
-//            rightArrow = ImageIO.read( new File( "rightArrow.png" ) );
-//            leftArrow = ImageIO.read( new File( "leftArrow.png" ) );
-//            backArrow = ImageIO.read( new File( "backArrow.png" ) );
-//            sunBall = ImageIO.read( new File( "sunImage.png" ) );
-//            moonBall = ImageIO.read( new File( "moonImage.png" ) );
-//            earthBall = ImageIO.read( new File( "earthImage.png" ) );
-//            equipImage = ImageIO.read( new File( "equipButton.png" ) );
+            equippedImage = ImageIO.read( new File( "images/equippedIcon.png" ) );
         }
         
         catch( IOException exception ){}
@@ -95,9 +92,17 @@ public class StorePanel extends JPanel
         equipButton.setBounds( 375, 465, 150, 50 );
         
         rightButton.setBorderPainted( false );
+        rightButton.setContentAreaFilled( false );
+        rightButton.setOpaque( false );
         leftButton.setBorderPainted( false );
+        leftButton.setContentAreaFilled( false );
+        leftButton.setOpaque( false );
         backButton.setBorderPainted( false );
+        backButton.setContentAreaFilled( false );
+        backButton.setOpaque( false );
         equipButton.setBorderPainted( false );
+        equipButton.setContentAreaFilled( false );
+        equipButton.setOpaque( false );
         
         rightButton.addActionListener( new ArrowListener() );
         leftButton.addActionListener( new ArrowListener() );
@@ -138,14 +143,16 @@ public class StorePanel extends JPanel
         
         g.setFont( new Font( "SansSerif", Font.BOLD, 20 ) );
         g.setColor( Color.WHITE );
-        g.drawString( "PRICE: " + store.getBalls().get( index ).getPrice(), 390, 540 );
+        g.drawString("MONEY: " + Main.saveGame.getPlayer().getMoney(), 300, 540);
+        g.drawString( "PRICE: " + store.getBalls().get( index ).getPrice(), 480, 540 );
     }
     
     private class BackButtonListener implements ActionListener
     {
         public void actionPerformed( ActionEvent event )
         {
-            Main.setPanel( new MainMenuPanel() );
+            Main.getStack().show( Main.getCards(), "menu" );
+            //Main.setPanel( new MainMenuPanel() );
         }
     }
     
@@ -177,7 +184,15 @@ public class StorePanel extends JPanel
                 }
                 repaint();
             }
-
+            Ball toSet = store.getBalls().get(index);
+            if ( toSet != Main.saveGame.getPlayer().currentBall() ) 
+            {
+                equipButton.setIcon( new ImageIcon( equipImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
+            }
+            else
+            {
+                equipButton.setIcon( new ImageIcon( equippedImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
+            }     
         }
     }
 
@@ -189,21 +204,31 @@ public class StorePanel extends JPanel
             System.out.println("Set to: " + store.getBalls().get(index).getClass().toString());
 
             Ball toSet = store.getBalls().get(index);
-            if(Main.saveGame.getPlayer().hasBall(toSet) || true) //debug statement
+            System.err.println(Main.saveGame.getPlayer().getMoney());
+
+            if(Main.saveGame.getPlayer().hasBall(toSet)) //debug statement
             {
+                System.err.println("Player has this ball already");
                 toSet.setOwned(true);
                 Main.saveGame.getPlayer().setBall(toSet);
+                
+                equipButton.setIcon( new ImageIcon( equippedImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
             }
             else if(Main.saveGame.getPlayer().canSpend(toSet.getPrice()))
             {
+                System.err.println("Player bought the ball");
                 toSet.setOwned(true);
                 Main.saveGame.getPlayer().spendMoney(toSet.getPrice());
                 Main.saveGame.getPlayer().setBall(toSet);
+                System.err.println(Main.saveGame.getPlayer().getMoney());
+          
+                equipButton.setIcon( new ImageIcon( equippedImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
+           
             }
+            else System.err.println("The player does not have this ball and can't get it");
             Main.saveGame.saveGame();
 
             System.out.println(Main.saveGame.getPlayer().currentBall().getClass().toString());
         }
     }
 }
-

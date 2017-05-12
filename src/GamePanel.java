@@ -15,8 +15,6 @@ import javax.swing.Timer;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.awt.Color;
-import java.util.Arrays;
-import java.awt.Color;
 import java.awt.Font;
 
 public class GamePanel extends JPanel
@@ -25,17 +23,19 @@ public class GamePanel extends JPanel
     private static final int BACKGROUND_WIDTH = Main.getFrameWidth();
     private static final int BACKGROUND_HEIGHT = Main.getFrameHeight();
     private static final float ACC_AMOUNT = 0.4f;
+    private static final float POWER_UP_RARITY = 3f; // a higher number is rarer. min 1
     
     //Properties
     private Image background;
     private BufferedImage backArrow;
     private BufferedImage pauseIcon;
+    private BufferedImage resumeIcon;
     private JButton backButton;
     private JButton pauseButton;
-    private Ball mainBall;
+    private ArrayList<Ball> balls;
     private ArrayList<Laser> lasers;
+    private ArrayList<PowerUp> powerUps;
     private Visuals painter;
-    private double motion;
     private Timer motionTimer;
     private Timer gameTimer;
     private Timer scoreTimer;
@@ -45,6 +45,8 @@ public class GamePanel extends JPanel
     private double score;
     private boolean[] pressedKeyList;
     private Point dirVector;
+    private double pace;
+    private Shield active;
     
     public GamePanel()
     {
@@ -58,21 +60,23 @@ public class GamePanel extends JPanel
         pressedKeyList = new boolean[]{ false, false, false,false};
         dirVector = new Point( 0, 0);
         
-        //mainBall = new EarthBall(); //deprecated debug statement
-        mainBall = Main.saveGame.getPlayer().currentBall();
-
+        balls = new ArrayList<Ball>();
+        balls.add( Main.saveGame.getPlayer().currentBall() );
+        dirVector.setLocation( 2, 2);
         lasers = new ArrayList<Laser>();
+        powerUps = new ArrayList<PowerUp>();
         painter = new Visuals();
-        motion = 1.5;
+        pace = 1;
         addKeyListener( new BallListener() );
         motionTimer = new Timer( 16, new MotionListener() );
-        motionTimer.start();
+        //motionTimer.start();
         delay = 1000;
         gameTimer = new Timer( delay, new TimerListener() );
-        gameTimer.start();
+        //gameTimer.start();
         score = 0;
         scoreTimer = new Timer( 100, new ScoreListener() );
-        scoreTimer.start();
+        //scoreTimer.start();
+        
     }
     
     public void addImages()
@@ -82,10 +86,7 @@ public class GamePanel extends JPanel
             background = ImageIO.read( new File( "images/gameBackground.png" ) );
             backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
             pauseIcon = ImageIO.read( new File( "images/pauseIcon.png" ) );
-
-//            background = ImageIO.read( new File( "gameBackground.png" ) );
-//            backArrow = ImageIO.read( new File( "backArrow.png" ) );
-//            pauseIcon = ImageIO.read( new File( "pauseIcon.png" ) );
+            resumeIcon = ImageIO.read( new File( "images/resumeIcon.png" ) );
         }
         
         catch( IOException exception ){}
@@ -100,7 +101,11 @@ public class GamePanel extends JPanel
         pauseButton.setBounds( BACKGROUND_WIDTH - 70, 20, 50, 50 );
         
         backButton.setBorderPainted( false );
+        backButton.setContentAreaFilled( false );
+        backButton.setOpaque( false );
         pauseButton.setBorderPainted( false );
+        pauseButton.setContentAreaFilled( false );
+        pauseButton.setOpaque( false );
         
         backButton.addActionListener( new BackButtonListener() );
         pauseButton.addActionListener( new PauseButtonListener() );
@@ -111,7 +116,21 @@ public class GamePanel extends JPanel
     
     public void restartGame()
     {
-        Main.setPanel( new GamePanel() );
+        balls.clear();
+        powerUps.clear();
+        balls.add( Main.saveGame.getPlayer().currentBall() );
+        dirVector = new Point( 0, 0);
+        balls.get( 0 ).setVelocity( new Point( 0, 0 ) );
+        balls.get( 0 ).getLocation().setLocation( BACKGROUND_WIDTH / 2, BACKGROUND_HEIGHT / 2 );
+        pressedKeyList = new boolean[]{ false, false, false,false};       
+        lasers = new ArrayList<Laser>();
+        addKeyListener( new BallListener() );
+        delay = 1000;
+        motionTimer.restart();
+        gameTimer.restart();
+        score = 0;
+        scoreTimer.restart();
+        //Main.setPanel( new GamePanel() );
     }
     
     public void paintComponent( Graphics g )
@@ -124,12 +143,26 @@ public class GamePanel extends JPanel
         g.setColor( Color.WHITE );
         g.drawString( "SCORE: " + score / 100.0, 395, 30 );
         
-        painter.drawBall( mainBall, g );
-        
+        for ( Ball toDraw: balls)
+        {
+            painter.drawBall( toDraw , g );
+        }
         for ( Laser toDraw: lasers )
         {
             painter.drawLaser( toDraw, g );
-        }  
+        }
+        for ( PowerUp toDraw: powerUps)
+        {
+            painter.drawPowerUp( toDraw , g );
+            //painter.drawPowerUpEffect( new Shield(), balls.get(0), g );
+        }
+        for ( Ball toEffect: balls)
+            {
+                if ( active != null && active.isActive() )
+                {
+                    painter.drawPowerUpEffect( active, toEffect, g );
+                }
+            }
         requestFocusInWindow( true );
     }
     
@@ -152,11 +185,13 @@ public class GamePanel extends JPanel
         public void actionPerformed( ActionEvent event )
         {
             pause();
+            pauseButton.setIcon( new ImageIcon( resumeIcon.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
             resume = JOptionPane.showConfirmDialog( GamePanel.this, "Game is paused! Resume?\nCurrent score: " 
                                                        + score / 100.0, "ESCAPE ~ Paused", 0 );
             if ( resume == 0 )
             {
                 resume();
+                pauseButton.setIcon( new ImageIcon( pauseIcon.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
             }
         }
     }
@@ -166,7 +201,9 @@ public class GamePanel extends JPanel
         public void actionPerformed( ActionEvent event )
         {
             pause();
-            Main.setPanel( new MainMenuPanel() );
+            Main.getStack().show( Main.getCards(), "menu" );
+            //pause();
+//            Main.setPanel( new MainMenuPanel() );
         }
     }
     
@@ -219,31 +256,56 @@ public class GamePanel extends JPanel
     private class MotionListener implements ActionListener
     {
         @Override
-        public void actionPerformed( ActionEvent event ){
+        public void actionPerformed( ActionEvent event )
             {
                 for ( Laser check : lasers )
                 {
-                    if ( check.isTouched( mainBall ) )
+                    for ( int i = balls.size() - 1; i >= 0; i--)
                     {
-                        pause();
-                        playAgain = LeaderboardControl.endGame(Main.saveGame.getPlayer());
-                        if ( playAgain == 0 )
+                        if ( check.isTouched( balls.get(i) ))
                         {
-                            restartGame();
-                        }
-                        else
-                        {
-                            Main.setPanel( new MainMenuPanel() );
+                            balls.remove( i);
+                            System.out.println( balls.size());
+                            if ( balls.size() == 0)
+                            {
+                                pause();
+                                playAgain = LeaderboardControl.endGame(Main.saveGame.getPlayer());
+                                if ( playAgain == 0 )
+                                {
+                                    restartGame();
+                                }
+                                else
+                                {
+                                    Main.getStack().show( Main.getCards(), "menu" );
+                                }
+                            }
                         }
                     }
                 }
+                
+                for( int i = powerUps.size() - 1; i >= 0; i--)
+                {
+                    if ( powerUps.get(i).isTaken( balls))
+                    {
+                        applyPowerUp( powerUps.get(i));
+                        if ( powerUps.get(i) instanceof Shield ) 
+                        {
+                            active = (Shield)powerUps.get(i);
+                            repaint();
+                        }
+                        powerUps.remove(i);
+                    }
+                }
+                updateDirectionVector();
+                for ( Ball ball: balls)
+                {
+                    ball.accelerate( dirVector);
+                    ball.move();
+                }
+                gameTimer.setDelay( (int)(delay / pace));
+                repaint();
             }
-            updateDirectionVector();
-            mainBall.accelerate( dirVector);
-            mainBall.move();
-            repaint();
         }
-    }
     
     //Inner class
     private class TimerListener implements ActionListener
@@ -252,6 +314,27 @@ public class GamePanel extends JPanel
         public void actionPerformed( ActionEvent event )
         {
             lasers.add( new Laser() );
+            
+            // This part creates a random powerUp. Starting from here...
+            int ran = (int)(Math.random() * 4 * POWER_UP_RARITY);
+            if( ran == 0)
+            {
+                powerUps.add( new Multiply());
+            }
+            else if( ran == 1)
+            {
+                powerUps.add( new SlowTime());
+            }
+            else if( ran == 2)
+            {
+                powerUps.add( new Shield());
+            }
+            else if( ran == 3)
+            {
+                powerUps.add( new LaserKiller());
+            }
+            //...to here.
+            
             repaint();
             
             if ( delay >= 100 )
@@ -266,6 +349,14 @@ public class GamePanel extends JPanel
                     lasers.remove( i );
                 }
             }
+            for ( int i = powerUps.size() - 1; i >= 0; i--)
+            {
+                powerUps.get( i ).incrementTimeAlive( 1 );
+                if ( !powerUps.get( i ).isAlive() )
+                {
+                    powerUps.remove( i );
+                }
+            }
             Laser.incrementTimeToLive( 0.3 );
         }
     }
@@ -277,6 +368,7 @@ public class GamePanel extends JPanel
         {
             score = score + 10;
             Main.saveGame.getPlayer().updateScore( score / 100.0 );
+               if(score % 50 == 0) Main.saveGame.getPlayer().addMoney(1); //scale the increase in money
             repaint();
         }
     }
@@ -305,7 +397,52 @@ public class GamePanel extends JPanel
         {
             dirVector.scalarProduct( 1 / dirVector.getDistanceToOrigin() );
         }
-        dirVector.scalarProduct( ACC_AMOUNT );
-        
+        dirVector.scalarProduct( ACC_AMOUNT * pace);
+    }
+   
+    // new methods
+    public ArrayList<Ball> getBalls()
+    {
+        return balls;
+    }
+    
+    public void setBalls( ArrayList<Ball> balls)
+    {
+        this.balls = balls;
+    }
+    
+    public void addBalls( ArrayList<Ball> toAdd)
+    {
+        for( Ball ball: toAdd)
+        {
+            this.balls.add( ball);
+        }
+    }
+    
+    public ArrayList<Laser> getLasers()
+    {
+        return lasers;
+    }
+    
+    
+    public ArrayList<PowerUp> getPowerUps()
+    {
+        return powerUps;
+    }
+    
+    
+    public double getPace()
+    {
+        return pace;
+    }
+    
+    public void setPace( double pace)
+    {
+        this.pace = pace;
+    }
+    
+    private void applyPowerUp(PowerUp pu)
+    {
+        pu.apply( this);
     }
 }

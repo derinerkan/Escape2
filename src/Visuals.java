@@ -19,6 +19,10 @@ public class Visuals
     private BufferedImage sunImage;
     private BufferedImage moonImage;
     private BufferedImage earthImage;
+    private BufferedImage multiply;
+    private BufferedImage slowTime;
+    private BufferedImage shield;
+    private BufferedImage laserKiller;
     
     public Visuals()
     {
@@ -27,12 +31,12 @@ public class Visuals
             sunImage = ImageIO.read( new File( "images/sunImage.png" ) );
             moonImage = ImageIO.read( new File( "images/moonImage.png" ) );
             earthImage = ImageIO.read( new File( "images/earthImage.png" ) );
-
-//            sunImage = ImageIO.read( new File( "sunImage.png" ) );
-//            moonImage = ImageIO.read( new File( "moonImage.png" ) );
-//            earthImage = ImageIO.read( new File( "earthImage.png" ) );
+            multiply = ImageIO.read( new File( "images/multiply.png" ) );
+            slowTime = ImageIO.read( new File( "images/timeslow.png" ) );
+            shield = ImageIO.read( new File( "images/shield.png" ) );
+            laserKiller = ImageIO.read( new File( "images/laserkiller.png" ) );
         }
-        catch( IOException exception ){exception.printStackTrace();}
+        catch( IOException exception ){}
     }
     
     /**
@@ -76,5 +80,42 @@ public class Visuals
         g.setColor( Color.BLUE );
         g.drawLine( ( int ) toDraw.getP1().getX(), ( int ) toDraw.getP1().getY(), ( int ) toDraw.getP2().getX(),
                    ( int ) toDraw.getP2().getY() );
+    }
+    
+    
+    public void drawPowerUp( PowerUp toDraw, Graphics g )
+    {
+        if ( toDraw instanceof SlowTime )
+        {
+            g.drawImage( slowTime, ( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
+        else if ( toDraw instanceof Multiply )
+        {
+            g.drawImage( multiply, ( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
+        else if ( toDraw instanceof LaserKiller )
+        {
+            g.drawImage( laserKiller, ( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
+        else if ( toDraw instanceof Shield )
+        {
+            g.drawImage( shield, ( int ) toDraw.getLocation().getX() - toDraw.getRadius() , 
+                        ( int ) toDraw.getLocation().getY() - toDraw.getRadius(), 
+                        2 * toDraw.getRadius(), 2 * toDraw.getRadius(), null );
+        }
+    }
+    
+     public void drawPowerUpEffect( PowerUp toDraw, Ball toEffect, Graphics g ) // Work in progress
+    {
+            g.setColor( new Color( 255, 165, 0, 130 ) );
+            g.fillOval( ( int ) toEffect.getLocation().getX() - toEffect.getRadius() - 15 , 
+                        ( int ) toEffect.getLocation().getY() - toEffect.getRadius() - 15, 
+                        2 * ( toEffect.getRadius() + 15 ), 2 * ( toEffect.getRadius() + 15 ) );
     }
 }

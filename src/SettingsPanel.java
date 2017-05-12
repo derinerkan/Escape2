@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 public class SettingsPanel extends JPanel
 {
@@ -21,6 +22,7 @@ public class SettingsPanel extends JPanel
     private Image settingsLabel;
     private BufferedImage backArrow;
     private JButton backButton;
+    private JSlider soundSlider;
     
     public SettingsPanel()
     {
@@ -35,9 +37,9 @@ public class SettingsPanel extends JPanel
     {
         try
         {
-            background = ImageIO.read( new File( "settingsBackground.jpg" ) );
-            settingsLabel = ImageIO.read( new File( "settingsLabel.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );
+            background = ImageIO.read( new File( "images/settingsBackground.jpg" ) );
+            settingsLabel = ImageIO.read( new File( "images/settingsLabel.png" ) );
+            backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
         }
         
         catch( IOException exception ){}
@@ -45,14 +47,19 @@ public class SettingsPanel extends JPanel
     
     public void addButtons()
     {
+        soundSlider = new JSlider( 0, 100, 50 );
+        
         backButton = new JButton( new ImageIcon( backArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
         
         backButton.setBounds( 20, 20, 50, 50 );
         
         backButton.setBorderPainted( false );
+        backButton.setOpaque( false );
+        backButton.setContentAreaFilled( false );
         
         backButton.addActionListener( new BackButtonListener() );
         
+        add( soundSlider );
         add( backButton );
     }
     
@@ -68,7 +75,8 @@ public class SettingsPanel extends JPanel
     {
         public void actionPerformed( ActionEvent event )
         {
-            Main.setPanel( new MainMenuPanel() );
+            Main.getStack().show( Main.getCards(), "menu" );
+            //Main.setPanel( new MainMenuPanel() );
         }
     }
 }

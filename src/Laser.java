@@ -12,7 +12,7 @@ public class Laser
     private double timeAlive;
     private static double timeToLive;
     private double length;
-    private double slope; //additional, not in the UML
+    private double slope; //additional
     
     /**
      * The default constructor of the Laser. Produces a line segment of random position and random length.
@@ -58,41 +58,57 @@ public class Laser
      */
     public boolean isTouched( Ball toCheck )
     {
-        if ( toCheck.isTouchable() )
+        Point segV;
+        Point ptV;
+        Point segVUnit;
+        Point projV;
+        Point closest;
+        Point distV;
+        double proj;
+        
+        if ( !toCheck.isTouchable() )
         {
-            double m = this.getSlope();
-            double x = toCheck.getLocation().getX();
-            double y = toCheck.getLocation().getY();
-            double r = toCheck.getRadius();
-            double y1 = this.p1.getY();
-            double x1 = this.p1.getX();
-            double x2 = this.p2.getX();
-            double y2 = this.p2.getY();
-            double dif = Math.abs( y - m * x - y1 + m * x1 ) / Math.sqrt( m * m + 1 );
-            
-            if ( m != Math.PI && m >= 0 )
-            {
-                if ( dif <= r && x + r >= x1 && x - r <= x2 && y + r >= y1 && y - r <= y2 )
-                {
-                    return true;
-                }
-                return false;
-            }
-            else if ( m < 0 ) 
-            {
-                if ( dif <= r && x + r >= x2 && x - r <= x1 && y + r >= y1 && y - r <= y2 )
-                {
-                    return true;
-                }
-                return false;
-            }
-            if ( Math.abs( x - x1 ) <= r && y + r >= y1 && y - r <= y2 )
-            { 
-                return true;
-            }
             return false;
         }
-        return false;
+        
+        if (  toCheck.getLocation().getDistance( p2 ) <= toCheck.getRadius()
+                || toCheck.getLocation().getDistance( p1 ) <= toCheck.getRadius() )
+        {
+            return true;
+        }
+        
+        segV = p2.dif( p1 );
+        ptV = toCheck.getLocation().dif( p1 );
+        segVUnit = new Point();
+        
+        if ( segV.getDistanceToOrigin() > 0 )
+        {
+            segVUnit = segV.scalar( 1 / segV.getDistanceToOrigin() );
+        }
+        else
+        {
+            return false;
+        }
+        
+        proj = ptV.dotProduct( segVUnit );
+        
+        if ( proj <= 0 || proj >= segV.getDistanceToOrigin() )
+        {
+            return false;
+        }
+        
+        projV = segVUnit.scalar( proj );
+        closest = projV.sum( p1 );
+        distV = toCheck.getLocation().dif( closest );
+        
+        if ( distV.getDistanceToOrigin() < toCheck.getRadius() )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     /**

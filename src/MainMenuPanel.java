@@ -50,14 +50,6 @@ public class MainMenuPanel extends JPanel
             leaderboardImage = ImageIO.read( new File( "images/leaderboard.png" ) );
             howToPlayImage = ImageIO.read( new File( "images/howToPlay.png" ) );
             settingsImage = ImageIO.read( new File( "images/settingsButton.png" ) );
-
-//            background = ImageIO.read( new File( "menuBackground.jpg") );
-//            logo = ImageIO.read( new File( "logo.png" ) );
-//            playImage = ImageIO.read( new File( "play.png" ) );
-//            storeImage = ImageIO.read( new File( "store.png" ) );
-//            leaderboardImage = ImageIO.read( new File( "leaderboard.png" ) );
-//            howToPlayImage = ImageIO.read( new File( "howToPlay.png" ) );
-//            settingsImage = ImageIO.read( new File( "settingsButton.png" ) );
         }
         
         catch( IOException exception ){}
@@ -83,7 +75,21 @@ public class MainMenuPanel extends JPanel
         howToPlayButton.addActionListener( new ClickListener() );
         settingsButton.addActionListener( new ClickListener() );
         
+        playButton.setBorderPainted( false );
+        playButton.setOpaque( false );
+        playButton.setContentAreaFilled( false );
+        storeButton.setBorderPainted( false );
+        storeButton.setOpaque( false );
+        storeButton.setContentAreaFilled( false );
+        leaderboardButton.setBorderPainted( false );
+        leaderboardButton.setOpaque( false );
+        leaderboardButton.setContentAreaFilled( false );
+        howToPlayButton.setBorderPainted( false );
+        howToPlayButton.setOpaque( false );
+        howToPlayButton.setContentAreaFilled( false );
         settingsButton.setBorderPainted( false );
+        settingsButton.setOpaque( false );
+        settingsButton.setContentAreaFilled( false );
         
         add( playButton );
         add( storeButton );
@@ -107,23 +113,24 @@ public class MainMenuPanel extends JPanel
         {
             if ( ( JButton )event.getSource() == playButton )
             {
-                Main.setPanel( new GamePanel() );
+                Main.getStack().show( Main.getCards(), "game" );
+                Main.startGame();
             }
             else if ( ( JButton )event.getSource() == storeButton )
             {
-                Main.setPanel( new StorePanel() );
+                Main.getStack().show( Main.getCards(), "store" );
             }
             else if ( ( JButton )event.getSource() == leaderboardButton )
             {
-                Main.setPanel( new LeaderboardPanel() );
+                Main.getStack().show( Main.getCards(), "leaderboard" );
             }
             else if ( ( JButton )event.getSource() == howToPlayButton )
             {
-                Main.setPanel( new HowToPlayPanel() );
+                Main.getStack().show( Main.getCards(), "howToPlay" );
             }
             else if ( ( JButton )event.getSource() == settingsButton )
             {
-                Main.setPanel( new SettingsPanel() );
+                Main.getStack().show( Main.getCards(), "settings" );
             }
         }
     }

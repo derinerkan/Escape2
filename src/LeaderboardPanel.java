@@ -41,10 +41,6 @@ public class LeaderboardPanel extends JPanel
             background = ImageIO.read( new File( "images/leaderboardBackground.jpg" ) );
             leaderboardLabel = ImageIO.read( new File( "images/leaderboardLabel.png" ) );
             backArrow = ImageIO.read( new File( "images/backArrow.png" ) );
-
-            /*background = ImageIO.read( new File( "leaderboardBackground.jpg" ) );
-            leaderboardLabel = ImageIO.read( new File( "leaderboardLabel.png" ) );
-            backArrow = ImageIO.read( new File( "backArrow.png" ) );/**/
         }
         catch( IOException exception ){}
     }
@@ -56,6 +52,8 @@ public class LeaderboardPanel extends JPanel
         backButton.setBounds( 20, 20, 50, 50 );
         
         backButton.setBorderPainted( false );
+        backButton.setContentAreaFilled( false );
+        backButton.setOpaque( false );
         
         backButton.addActionListener( new BackButtonListener() );
         
@@ -142,7 +140,8 @@ public class LeaderboardPanel extends JPanel
     {
         public void actionPerformed( ActionEvent event )
         {
-            Main.setPanel( new MainMenuPanel() );
+            Main.getStack().show( Main.getCards(), "menu" );
+            //Main.setPanel( new MainMenuPanel() );
         }
     }
 }

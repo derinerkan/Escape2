@@ -19,8 +19,6 @@ public class Point implements Serializable
     {
         x = ( int ) ( Math.random() * Main.getFrameWidth() );    
         y = ( int ) ( Math.random() * Main.getFrameHeight() );
-        
-        //will be implemented after GameScreen class, that is a GUI class
     }
     
     /**
@@ -57,6 +55,11 @@ public class Point implements Serializable
         this.y = this.y + y;
     }
     
+    /**
+     * Checks whether a point is the same with another, returns a relevant boolean.
+     * @param other is the point to compare.
+     * @return is the relevant boolean.
+     */
     public boolean equals( Point other )
     {
         return this.x == other.x &&  this.y == other.y;
@@ -70,6 +73,16 @@ public class Point implements Serializable
     {
         this.x = this.x * scalar;
         this.y = this.y * scalar;
+    }
+    
+    /**
+     * Multiplies the coordinates of the Point by a specified scalar and returns the Point.
+     * @param scalar is the specified scalar
+     * @return is the computed point.
+     */
+    public Point scalar( double scalar )
+    {
+        return new Point( this.x * scalar, this.y * scalar );
     }
     
     /**
@@ -98,6 +111,36 @@ public class Point implements Serializable
     public double getDistance( Point other )
     {
         return Math.sqrt( ( x - other.getX() ) * ( x - other.getX() ) + ( y - other.getY() ) * ( y - other.getY() ) );
+    }
+    
+    /**
+     * Returns the dot product of this point with another.
+     * @param other is the other point in the dot product operation.
+     * @return is the computed dot product.
+     */
+    public double dotProduct( Point other )
+    {
+        return x * other.x + y * other.y;
+    }
+    
+    /**
+     * Returns the vectoral sum of two points
+     * @param other is the other point in the sum operation.
+     * @return is the sum of the points.
+     */
+    public Point sum( Point other )
+    {
+        return new Point( x + other.x, y + other.y );
+    }
+    
+    /**
+     * Returns the vectoral difference of two points
+     * @param other is the other point in the difference operation.
+     * @return is the difference of the points.
+     */
+    public Point dif( Point other )
+    {
+        return new Point( x - other.x, y - other.y );
     }
     
     /**
