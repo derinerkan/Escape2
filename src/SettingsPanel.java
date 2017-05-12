@@ -1,15 +1,11 @@
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -65,6 +61,7 @@ public class SettingsPanel extends JPanel
     private void addButtons()
     {
         soundSlider = new JSlider( 0, 100, 50 );
+
         
         backButton = new JButton( new ImageIcon( backArrow.getScaledInstance( 50, 50, BufferedImage.TYPE_INT_ARGB ) ) );
         
@@ -76,7 +73,10 @@ public class SettingsPanel extends JPanel
         
         backButton.addActionListener( new BackButtonListener() );
 
-        soundSlider.setBounds(100,100,500,50);
+
+        soundSlider.setBounds(100,250,500,50);
+        soundSlider.setOpaque(false);
+        soundSlider.setBackground(new Color(0x00ff00ff, true));
         soundSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
