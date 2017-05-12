@@ -80,7 +80,7 @@ public class Visuals
     {
         Graphics2D g2 = ( Graphics2D ) g;
         g2.setStroke( new BasicStroke( 4 ) );
-        g.setColor( Color.BLUE );
+        g.setColor( Color.RED );
         g.drawLine( ( int ) toDraw.getP1().getX(), ( int ) toDraw.getP1().getY(), ( int ) toDraw.getP2().getX(),
                    ( int ) toDraw.getP2().getY() );
     }

@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Settings panel for Escape
@@ -73,7 +75,15 @@ public class SettingsPanel extends JPanel
         backButton.setContentAreaFilled( false );
         
         backButton.addActionListener( new BackButtonListener() );
-        
+
+        soundSlider.setBounds(100,100,500,50);
+        soundSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                System.err.println(soundSlider.getValue());
+            }
+        });
+
         add( soundSlider );
         add( backButton );
     }

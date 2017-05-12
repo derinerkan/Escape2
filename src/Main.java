@@ -52,6 +52,7 @@ public class Main
         mainFrame.setSize( FRAME_WIDTH, FRAME_HEIGHT );
         mainFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         mainFrame.setVisible( true );
+        mainFrame.setResizable(false);
         startMusic();
     }
 
@@ -120,6 +121,7 @@ public class Main
             Clip clip = (Clip)AudioSystem.getLine(info);
             clip.open(inputStream);
             clip.start();
+
             Thread.sleep(1);
         }
         catch(Exception ex)

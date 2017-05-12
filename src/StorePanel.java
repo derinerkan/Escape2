@@ -201,7 +201,7 @@ public class StorePanel extends JPanel
                 repaint();
             }
             Ball toSet = Store.getBalls().get(index);
-            if ( toSet != Main.saveGame.getPlayer().currentBall() ) 
+            if ( toSet.getClass() != Main.saveGame.getPlayer().currentBall().getClass() )
             {
                 equipButton.setIcon( new ImageIcon( equipImage.getScaledInstance( 150, 100, BufferedImage.TYPE_INT_ARGB ) ) );
             }
